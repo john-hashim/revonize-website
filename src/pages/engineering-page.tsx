@@ -1,3 +1,4 @@
+import { AssetImage } from '@/components/common/asset-image'
 import { BadgeCheck } from 'lucide-react'
 import engineeringHero from '@/assets/images/engineering/engineering-services-hero.webp'
 import { CatalogCard } from '@/components/common/catalog-card'
@@ -13,7 +14,7 @@ export function EngineeringPage() {
         title="Engineering Services"
         description="Bring your design from concept to production with 3D modelling and simulation, PCB development, carbon fibre moulding, and precision CNC machining."
         visual={
-          <img
+          <AssetImage
             src={engineeringHero}
             alt="Carbon fibre moulding, circuit boards, a machined bracket and a simulated bracket arranged on a single platform"
             width={1200}
@@ -50,7 +51,7 @@ export function EngineeringPage() {
                 description={description}
                 action="View service"
                 image={
-                  <img
+                  <AssetImage
                     {...preview}
                     width={576}
                     height={384}

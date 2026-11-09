@@ -14,7 +14,7 @@ function CredentialLogos({ duplicate = false }: { duplicate?: boolean }) {
         </a>
       </li>
       <li>
-        <img src={keralaStartupMissionLogo} alt="Kerala Startup Mission" className="h-14 w-auto" />
+        <img src={keralaStartupMissionLogo} alt="Kerala Startup Mission" width={165} height={92} className="h-14 w-auto" />
       </li>
       <li>
         <img

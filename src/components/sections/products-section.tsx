@@ -1,3 +1,4 @@
+import { AssetImage } from '@/components/common/asset-image'
 import { useEffect, useRef, useState } from 'react'
 import { ArrowUpRight } from 'lucide-react'
 import { Link } from 'react-router'
@@ -135,9 +136,10 @@ export function ProductsSection() {
             const active = index === activeIndex
 
             return (
-              <img
+              <AssetImage
                 key={slug}
                 src={preview}
+                sizes="(min-width: 1280px) 640px, (min-width: 768px) 55vw, calc(100vw - 40px)"
                 alt={active ? `${name} ${format.toLowerCase()} UAV` : ''}
                 aria-hidden={!active}
                 width={1024}

@@ -1,4 +1,5 @@
 import { createBrowserRouter } from 'react-router'
+import { RouteError } from '@/app/route-error'
 import { SiteLayout } from '@/app/site-layout'
 import { headerPages } from '@/data/site-navigation'
 import { HomePage } from '@/pages/home-page'
@@ -6,6 +7,7 @@ import { HomePage } from '@/pages/home-page'
 export const router = createBrowserRouter([
   {
     element: <SiteLayout />,
+    errorElement: <RouteError />,
     hydrateFallbackElement: (
       <p role="status" className="container-shell py-16 text-muted-foreground">
         Loading page…
@@ -27,46 +29,45 @@ export const router = createBrowserRouter([
         })),
       {
         path: 'products',
-        lazy: {
-          Component: async () => (await import('@/pages/products-page')).ProductsPage,
-        },
+        lazy: async () => ({
+          Component: (await import('@/pages/products-page')).ProductsPage,
+        }),
       },
       {
         path: 'products/:slug',
-        lazy: {
-          Component: async () => (await import('@/pages/product-detail-page')).ProductDetailPage,
-        },
+        lazy: async () => ({
+          Component: (await import('@/pages/product-detail-page')).ProductDetailPage,
+        }),
       },
       {
         path: 'engineering',
-        lazy: {
-          Component: async () => (await import('@/pages/engineering-page')).EngineeringPage,
-        },
+        lazy: async () => ({
+          Component: (await import('@/pages/engineering-page')).EngineeringPage,
+        }),
       },
       {
         path: 'engineering/:serviceId',
-        lazy: {
-          Component: async () => (await import('@/pages/engineering-service-page')).EngineeringServicePage,
-        },
+        lazy: async () => ({
+          Component: (await import('@/pages/engineering-service-page')).EngineeringServicePage,
+        }),
       },
       {
         path: 'about',
-        lazy: {
-          Component: async () => (await import('@/pages/about-page')).AboutPage,
-        },
+        lazy: async () => ({
+          Component: (await import('@/pages/about-page')).AboutPage,
+        }),
       },
       {
         path: 'contact',
-        lazy: {
-          Component: async () => (await import('@/pages/contact-page')).ContactPage,
-        },
+        lazy: async () => ({
+          Component: (await import('@/pages/contact-page')).ContactPage,
+        }),
       },
       {
         path: '*',
-        lazy: {
-          Component: async () =>
-            (await import('@/pages/not-found-page')).NotFoundPage,
-        },
+        lazy: async () => ({
+          Component: (await import('@/pages/not-found-page')).NotFoundPage,
+        }),
       },
     ],
   },

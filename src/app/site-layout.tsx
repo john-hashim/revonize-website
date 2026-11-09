@@ -1,9 +1,11 @@
-import { Outlet } from 'react-router'
+import { Outlet, useNavigation } from 'react-router'
 import { SiteHeader } from '@/components/layout/site-header'
 import { SiteFooter } from '@/components/layout/site-footer'
 import { RouteEffects } from '@/app/route-effects'
 
 export function SiteLayout() {
+  const navigation = useNavigation()
+
   return (
     <>
       <a
@@ -13,8 +15,12 @@ export function SiteLayout() {
         Skip to content
       </a>
       <SiteHeader />
+      <p role="status" className="sr-only">
+        {navigation.state === 'loading' ? 'Loading page…' : ''}
+      </p>
       <main
         id="main-content"
+        aria-busy={navigation.state === 'loading'}
         tabIndex={-1}
         className="min-h-[60vh] outline-none"
       >

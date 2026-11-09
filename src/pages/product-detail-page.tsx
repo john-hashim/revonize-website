@@ -1,3 +1,4 @@
+import { AssetImage } from '@/components/common/asset-image'
 import { useParams } from 'react-router'
 import { ActionLink } from '@/components/common/action-link'
 import { PageIntro } from '@/components/common/page-intro'
@@ -19,7 +20,7 @@ export function ProductDetailPage() {
         title={product.name}
         description={product.description}
         visual={
-          <img
+          <AssetImage
             src={product.preview}
             alt={`${product.name} ${product.format.toLowerCase()} UAV`}
             width={1024}

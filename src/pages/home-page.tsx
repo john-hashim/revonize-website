@@ -1,4 +1,5 @@
-import { useEffect, useState } from 'react'
+import { AssetImage } from '@/components/common/asset-image'
+import { useEffect, useRef, useState } from 'react'
 import ibexHeroImage from '@/assets/images/uav/ibex-hero.webp'
 import spectraHeroImage from '@/assets/images/uav/spectra-hero.webp'
 import stemHeroImage from '@/assets/images/uav/stem-hero.webp'
@@ -31,6 +32,7 @@ const heroRotationInterval = 2134
 
 export function HomePage() {
   const [rotationStep, setRotationStep] = useState(0)
+  const readyAircraft = useRef(new Set<number>())
   const headlineIndex = rotationStep % heroHeadlineEndings.length
   const aircraftIndex = rotationStep % heroAircraft.length
 
@@ -46,17 +48,23 @@ export function HomePage() {
         return
       }
 
+      if (document.hidden) return
+
       timer = window.setInterval(() => {
-        setRotationStep((step) => step + 1)
+        setRotationStep((step) =>
+          readyAircraft.current.has((step + 1) % heroAircraft.length) ? step + 1 : step,
+        )
       }, heroRotationInterval)
     }
 
     updateRotation()
     reducedMotion.addEventListener('change', updateRotation)
+    document.addEventListener('visibilitychange', updateRotation)
 
     return () => {
       window.clearInterval(timer)
       reducedMotion.removeEventListener('change', updateRotation)
+      document.removeEventListener('visibilitychange', updateRotation)
     }
   }, [])
 
@@ -116,9 +124,13 @@ export function HomePage() {
           <figure className="mx-auto w-full max-w-[480px]">
             <div className="relative aspect-[4/3]">
               {heroAircraft.map(({ src }, index) => (
-                <img
+                <AssetImage
                   key={src}
                   src={src}
+                  onLoad={(event) => {
+                    const image = event.currentTarget
+                    void image.decode().then(() => readyAircraft.current.add(index)).catch(() => {})
+                  }}
                   alt=""
                   width={1024}
                   height={1024}

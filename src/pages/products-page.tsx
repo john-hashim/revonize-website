@@ -1,3 +1,4 @@
+import { AssetImage } from '@/components/common/asset-image'
 import uavLineup from '@/assets/images/uav/uav-lineup-hero.webp'
 import { ActionLink } from '@/components/common/action-link'
 import { CatalogCard } from '@/components/common/catalog-card'
@@ -13,7 +14,7 @@ export function ProductsPage() {
         title="UAV Products"
         description="Explore Rovonize’s foldable quadrotor, fixed-wing and helicopter UAVs for reconnaissance and surveillance, plus a quadrotor for hands-on drone education."
         visual={
-          <img
+          <AssetImage
             src={uavLineup}
             alt="Illustration of Spectra, Veeksha, IBEX and STEM in flight"
             width={1200}
@@ -45,8 +46,9 @@ export function ProductsPage() {
                 description={description}
                 action="View product"
                 image={
-                  <img
+                  <AssetImage
                     src={preview}
+                    sizes="192px"
                     alt={`${name} ${format.toLowerCase()} UAV`}
                     width={1024}
                     height={1024}

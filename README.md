@@ -65,6 +65,12 @@ Contact links can preselect `topic`, `product` and `course` through query parame
 
 Replace the matching WebP pair under `src/assets/images/uav/`, `src/assets/images/engineering/` or `src/assets/images/research/` with square exports at 1024 × 1024 and 480 × 480. Keep the filenames and redeploy. The engineering and UAV pages share the IBEX image pair. Vite updates the built filenames when image contents change, so the new deployment references the new versions.
 
+## Image loading
+
+Hero and industry images also have 480px WebP variants. `AssetImage` selects these for smaller rendered sizes and keeps the original for higher-density displays; retain the source image's actual width and height when using it. After replacing these originals, run `bash scripts/generate-image-variants.sh` (requires `cwebp`, available in the WebP command-line tools) and rebuild. The script preserves the originals.
+
+The first hero image has high fetch priority. Hero rotation waits for the next image to decode and pauses in hidden tabs. A delayed HTML loading message covers startup before JavaScript runs; lazy route failures offer an explicit reload action.
+
 ## Deployment
 
 Run `npm run build` and serve `dist/`. Configure your host to rewrite non-file requests (such as `/academy` and `/products/spectra`) to `/index.html` so direct route visits and refreshes work with React Router. No hosting provider is configured yet.

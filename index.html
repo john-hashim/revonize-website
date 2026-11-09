@@ -8,10 +8,15 @@
       content="Rovonize Systems brings together UAV platforms, engineering services, precision manufacturing and hands-on technology education in Kerala, India."
     />
     <meta name="theme-color" content="#0b1932" />
+    <link rel="preload" href="/node_modules/@fontsource-variable/inter/files/inter-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin />
+    <style>
+      .boot-status { margin: 0; padding: 4rem 1.25rem; color: #64748b; font: 1rem system-ui, sans-serif; animation: boot-reveal 0s 250ms both; }
+      @keyframes boot-reveal { from { opacity: 0; } to { opacity: 1; } }
+    </style>
     <title>Aerospace, Engineering &amp; Technology | Rovonize Systems</title>
   </head>
   <body>
-    <div id="root"></div>
+    <div id="root"><p class="boot-status" role="status">Loading page…</p></div>
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>

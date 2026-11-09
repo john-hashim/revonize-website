@@ -1,3 +1,4 @@
+import { AssetImage } from '@/components/common/asset-image'
 import { ArrowUpRight } from 'lucide-react'
 import { Link } from 'react-router'
 import { industries } from '@/data/industries'
@@ -24,8 +25,9 @@ export function MajorIndustriesSection() {
         <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
           {industries.map(({ title, image, description, learnMore, related }) => (
             <article key={title} className="flex flex-col overflow-hidden rounded-md bg-muted">
-              <img
+              <AssetImage
                 {...image}
+                sizes="(min-width: 1280px) 276px, (min-width: 640px) calc((100vw - 80px) / 2), calc(100vw - 40px)"
                 width={800}
                 height={451}
                 loading="lazy"
