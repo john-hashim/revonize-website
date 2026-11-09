@@ -19,11 +19,9 @@ import {
   SheetTitle,
   SheetTrigger,
 } from '@/components/ui/sheet'
-import { navigation } from '@/data/site'
-import { navigationCards } from '@/data/site-navigation'
+import { headerNavigation, navigationCards, requestQuote } from '@/data/site-navigation'
 import { cn } from '@/lib/utils'
 
-const headerNavigation = [...navigation, { label: 'Careers', href: '/careers' }]
 const desktopSlides = headerNavigation.flatMap((item, index) => {
   const cards = navigationCards[item.href]
   return cards ? [{ index, id: `desktop-navigation-panel-${item.href.slice(1)}`, cards }] : []
@@ -241,7 +239,7 @@ export function SiteHeader() {
             className="hidden text-xs sm:inline-flex"
           >
             <Link
-              to="/contact?topic=engineering"
+              to={requestQuote.href}
               onPointerEnter={closePanel}
               onFocus={closePanel}
             >
@@ -338,7 +336,7 @@ export function SiteHeader() {
                 })}
                 <SheetClose asChild>
                   <Button asChild className="mt-6 min-h-11">
-                    <Link to="/contact?topic=engineering">Consult engineering</Link>
+                    <Link to={requestQuote.href}>Consult engineering</Link>
                   </Button>
                 </SheetClose>
                 <SheetClose asChild>

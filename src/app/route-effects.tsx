@@ -1,15 +1,9 @@
 import { useEffect } from 'react'
-import { useLocation } from 'react-router'
-import { products } from '@/data/products'
+import { matchPath, useLocation } from 'react-router'
+import { headerPages } from '@/data/site-navigation'
 
 const pageTitles: Record<string, string> = {
   '/': 'Aerospace, Engineering & Technology',
-  '/products': 'UAV Products',
-  '/engineering': 'Engineering Services',
-  '/research': 'Research & Development',
-  '/academy': 'Engineering Academy',
-  '/about': 'About',
-  '/careers': 'Careers',
   '/contact': 'Contact',
 }
 
@@ -17,8 +11,8 @@ export function RouteEffects() {
   const { pathname, hash } = useLocation()
 
   useEffect(() => {
-    const product = products.find((item) => pathname === `/products/${item.slug}`)
-    document.title = `${pageTitles[pathname] ?? (product ? product.name : 'Page not found')} | Rovonize Systems`
+    const page = headerPages.find(({ href }) => matchPath(href, pathname))
+    document.title = `${pageTitles[pathname] ?? page?.label ?? 'Page not found'} | Rovonize Systems`
     if (hash) {
       document
         .getElementById(hash.slice(1))

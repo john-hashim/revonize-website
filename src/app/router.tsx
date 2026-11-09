@@ -1,5 +1,6 @@
 import { createBrowserRouter } from 'react-router'
 import { SiteLayout } from '@/app/site-layout'
+import { headerPages } from '@/data/site-navigation'
 import { HomePage } from '@/pages/home-page'
 
 export const router = createBrowserRouter([
@@ -12,52 +13,14 @@ export const router = createBrowserRouter([
     ),
     children: [
       { index: true, element: <HomePage /> },
-      {
-        path: 'products',
-        lazy: {
-          Component: async () => (await import('@/pages/products-page')).ProductsPage,
-        },
-      },
-      {
-        path: 'products/:slug',
-        lazy: {
-          Component: async () =>
-            (await import('@/pages/product-detail-page')).ProductDetailPage,
-        },
-      },
-      {
-        path: 'engineering',
-        lazy: {
-          Component: async () =>
-            (await import('@/pages/engineering-page')).EngineeringPage,
-        },
-      },
-      {
-        path: 'research',
-        lazy: {
-          Component: async () => (await import('@/pages/research-page')).ResearchPage,
-        },
-      },
-      {
-        path: 'academy',
-        lazy: {
-          Component: async () => (await import('@/pages/academy-page')).AcademyPage,
-        },
-      },
-      {
-        path: 'about',
-        lazy: {
-          Component: async () => (await import('@/pages/about-page')).AboutPage,
-        },
-      },
-      {
-        path: 'careers',
+      ...headerPages.map(({ href, label }) => ({
+        path: href,
         element: (
-          <section className="container-shell section-space">
-            <h1 className="text-4xl font-semibold tracking-tight sm:text-5xl">Careers</h1>
-          </section>
+          <h1 className="container-shell section-space text-4xl font-semibold tracking-tight sm:text-5xl">
+            Details about {label}
+          </h1>
         ),
-      },
+      })),
       {
         path: 'contact',
         lazy: {

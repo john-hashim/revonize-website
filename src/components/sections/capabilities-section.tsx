@@ -35,7 +35,7 @@ export function CapabilitiesSection() {
                   </p>
                   <h3 className="text-xl font-semibold tracking-tight sm:text-2xl">
                     <Link
-                      to={index === 4 ? '/academy' : `/engineering#${item.id}`}
+                      to={index === 4 ? '/academy' : `/engineering/${item.id}`}
                       className="inline-flex items-start gap-2 hover:text-primary"
                     >
                       {item.title}
