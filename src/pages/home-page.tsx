@@ -20,11 +20,13 @@ const heroHeadlineEndings = [
 ]
 
 const heroAircraft = [
-  { src: spectraHeroImage, alt: 'Rovonize Spectra foldable quadrotor UAV' },
-  { src: veekshaHeroImage, alt: 'Rovonize Veeksha fixed-wing UAV' },
-  { src: ibexHeroImage, alt: 'Rovonize IBEX helicopter UAV' },
-  { src: stemHeroImage, alt: 'Rovonize STEM education quadrotor' },
+  { src: spectraHeroImage, caption: 'Spectra · Foldable quadrotor' },
+  { src: veekshaHeroImage, caption: 'Veeksha · Fixed-wing UAV' },
+  { src: ibexHeroImage, caption: 'IBEX · Helicopter UAV' },
+  { src: stemHeroImage, caption: 'STEM · Education quadrotor' },
 ]
+
+const heroRotationInterval = 2134
 
 export function HomePage() {
   const [rotationStep, setRotationStep] = useState(0)
@@ -45,7 +47,7 @@ export function HomePage() {
 
       timer = window.setInterval(() => {
         setRotationStep((step) => step + 1)
-      }, 4000)
+      }, heroRotationInterval)
     }
 
     updateRotation()
@@ -70,11 +72,13 @@ export function HomePage() {
               <span aria-hidden="true" className="block">
                 We design and build
               </span>
-              <span aria-hidden="true" className="grid text-primary">
+              <span aria-hidden="true" className="grid overflow-hidden text-primary">
                 {heroHeadlineEndings.map((ending, index) => (
                   <span
                     key={ending}
-                    className={`col-start-1 row-start-1 ${index === headlineIndex ? '' : 'invisible'}`}
+                    className={`col-start-1 row-start-1 ${index === headlineIndex
+                      ? 'motion-safe:animate-in motion-safe:fade-in-0 motion-safe:slide-in-from-top-4 motion-safe:duration-350'
+                      : 'invisible'}`}
                   >
                     {ending}
                   </span>
@@ -113,21 +117,27 @@ export function HomePage() {
               </Link>
             </div>
           </div>
-          <div className="relative mx-auto aspect-[4/3] w-full max-w-[480px]">
-            {heroAircraft.map(({ src, alt }, index) => (
-              <img
-                key={src}
-                src={src}
-                alt={alt}
-                aria-hidden={index !== aircraftIndex}
-                width={1024}
-                height={1024}
-                fetchPriority={index === 0 ? 'high' : 'low'}
-                decoding="async"
-                className={`absolute inset-0 size-full object-cover transition-opacity duration-500 motion-reduce:transition-none ${index === aircraftIndex ? 'opacity-100' : 'opacity-0'}`}
-              />
-            ))}
-          </div>
+          <figure className="mx-auto w-full max-w-[480px]">
+            <div className="relative aspect-[4/3]">
+              {heroAircraft.map(({ src }, index) => (
+                <img
+                  key={src}
+                  src={src}
+                  alt=""
+                  width={1024}
+                  height={1024}
+                  fetchPriority={index === 0 ? 'high' : 'low'}
+                  decoding="async"
+                  className={`absolute inset-0 size-full object-cover ${index === aircraftIndex
+                    ? 'z-10 motion-safe:animate-hero-aircraft-in'
+                    : 'opacity-0 motion-safe:transition-opacity motion-safe:duration-250'}`}
+                />
+              ))}
+            </div>
+            <figcaption className="text-center text-xs leading-5 text-muted-foreground">
+              {heroAircraft[aircraftIndex].caption}
+            </figcaption>
+          </figure>
         </div>
       </section>
       <CapabilitiesSection />
