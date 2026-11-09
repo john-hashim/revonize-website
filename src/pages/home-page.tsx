@@ -1,3 +1,9 @@
+import { useEffect, useState } from 'react'
+import { Link } from 'react-router'
+import ibexHeroImage from '@/assets/images/uav/ibex-hero.webp'
+import spectraHeroImage from '@/assets/images/uav/spectra-hero.webp'
+import stemHeroImage from '@/assets/images/uav/stem-hero.webp'
+import veekshaHeroImage from '@/assets/images/uav/veeksha-hero.webp'
 import { ActionLink } from '@/components/common/action-link'
 import { AcademySection } from '@/components/sections/academy-section'
 import { CapabilitiesSection } from '@/components/sections/capabilities-section'
@@ -6,45 +12,121 @@ import { LeadershipSection } from '@/components/sections/leadership-section'
 import { ProductsSection } from '@/components/sections/products-section'
 import { ResearchSection } from '@/components/sections/research-section'
 
+const heroHeadlineEndings = [
+  'UAVs.',
+  'Composite structures.',
+  'Custom electronics.',
+  'Precision components.',
+]
+
+const heroAircraft = [
+  { src: spectraHeroImage, alt: 'Rovonize Spectra foldable quadrotor UAV' },
+  { src: veekshaHeroImage, alt: 'Rovonize Veeksha fixed-wing UAV' },
+  { src: ibexHeroImage, alt: 'Rovonize IBEX helicopter UAV' },
+  { src: stemHeroImage, alt: 'Rovonize STEM education quadrotor' },
+]
+
 export function HomePage() {
+  const [rotationStep, setRotationStep] = useState(0)
+  const headlineIndex = rotationStep % heroHeadlineEndings.length
+  const aircraftIndex = rotationStep % heroAircraft.length
+
+  useEffect(() => {
+    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)')
+    let timer: number | undefined
+
+    function updateRotation() {
+      window.clearInterval(timer)
+
+      if (reducedMotion.matches) {
+        setRotationStep(0)
+        return
+      }
+
+      timer = window.setInterval(() => {
+        setRotationStep((step) => step + 1)
+      }, 4000)
+    }
+
+    updateRotation()
+    reducedMotion.addEventListener('change', updateRotation)
+
+    return () => {
+      window.clearInterval(timer)
+      reducedMotion.removeEventListener('change', updateRotation)
+    }
+  }, [])
+
   return (
     <>
       <section className="border-b bg-muted">
-        <div className="container-shell pb-14 pt-16 sm:pb-16 sm:pt-20 lg:pb-20 lg:pt-24">
-          <div className="mb-8 flex flex-wrap items-center gap-x-4 gap-y-2 text-[10px] font-medium uppercase tracking-[0.18em] text-primary">
-            <span className="flex items-center gap-2">
-              <span className="size-1.5 rounded-md bg-primary" />
-              Rovonize Systems
-            </span>
-            <span className="text-muted-foreground">Kochi, Kerala · India</span>
+        <div className="container-shell grid items-center gap-9 py-12 sm:py-16 lg:grid-cols-[minmax(0,3fr)_minmax(0,2fr)] lg:gap-12 lg:py-20 xl:gap-16">
+          <div>
+            <h1 className="text-[clamp(1.5rem,7vw,3.75rem)] font-semibold leading-[1.08] tracking-[-0.045em] sm:text-[clamp(2.75rem,5.4vw,3.75rem)] lg:text-[clamp(2.75rem,4.2vw,3.75rem)]">
+              <span className="sr-only">
+                We design and build UAVs, composite structures, custom electronics
+                and precision components.
+              </span>
+              <span aria-hidden="true" className="block">
+                We design and build
+              </span>
+              <span aria-hidden="true" className="grid text-primary">
+                {heroHeadlineEndings.map((ending, index) => (
+                  <span
+                    key={ending}
+                    className={`col-start-1 row-start-1 ${index === headlineIndex ? '' : 'invisible'}`}
+                  >
+                    {ending}
+                  </span>
+                ))}
+              </span>
+            </h1>
+            <div className="mt-6 max-w-2xl space-y-3 text-sm leading-6 text-muted-foreground">
+              <p>
+                At Rovonize Systems, we are redefining the future of aerial technology
+                by manufacturing advanced, high-performance drones tailored for diverse
+                applications. Based in Kochi, Kerala, we are proud contributors to the
+                Make in India initiative, striving to position India as a global leader
+                in drone innovation.
+              </p>
+              <p>
+                Our expertise spans industrial, agricultural, defense, and commercial
+                drone solutions, offering cutting-edge technology with precision,
+                efficiency, and reliability. With a strong focus on research, innovation,
+                and sustainability, we are committed to delivering drones that empower
+                industries, enhance security, and drive economic growth.
+              </p>
+            </div>
+            <div className="mt-7 flex flex-col flex-wrap gap-3 sm:flex-row">
+              <ActionLink to="/products">Explore UAV Products</ActionLink>
+              <ActionLink to="/engineering" variant="secondary">
+                View Engineering Services
+              </ActionLink>
+            </div>
+            <div className="mt-8 border-t pt-4">
+              <Link
+                to="/contact"
+                aria-label="Ask Rovonize about Certification and Compliance"
+                className="text-sm font-medium text-muted-foreground underline underline-offset-4 hover:text-primary"
+              >
+                Certification + Compliance
+              </Link>
+            </div>
           </div>
-          <h1 className="max-w-5xl text-[clamp(2.5rem,5.6vw,4.75rem)] font-semibold uppercase leading-[1.08] tracking-[-0.045em]">
-            Engineering the next generation{' '}
-            <span className="text-primary">aerospace.</span>
-          </h1>
-          <div className="mt-8 grid gap-6 lg:grid-cols-[1.5fr_1fr] lg:gap-20">
-            <p className="max-w-2xl text-base leading-8 text-muted-foreground sm:text-lg">
-              At Rovonize Systems, we bring engineering ideas to life through
-              advanced UAV platforms, precision manufacturing and hands-on
-              technology education.
-            </p>
-            <p className="max-w-lg text-sm leading-7 text-muted-foreground">
-              Based in Kochi, Kerala, we contribute to the Make in India
-              initiative through drone innovation for industrial, agricultural,
-              defence and commercial applications.
-            </p>
-          </div>
-          <div className="mt-9 flex flex-col gap-3 min-[400px]:flex-row sm:gap-4">
-            <ActionLink to="/products">Explore UAV products</ActionLink>
-            <ActionLink to="/engineering" variant="secondary">
-              Engineering services
-            </ActionLink>
-          </div>
-          <div className="mt-14 flex flex-wrap gap-x-8 gap-y-3 border-t pt-6 text-[10px] font-medium uppercase tracking-[0.16em] text-muted-foreground sm:mt-16">
-            <span>UAV systems</span>
-            <span>Digital engineering</span>
-            <span>Precision manufacturing</span>
-            <span>Technical education</span>
+          <div className="relative mx-auto aspect-[4/3] w-full max-w-[480px]">
+            {heroAircraft.map(({ src, alt }, index) => (
+              <img
+                key={src}
+                src={src}
+                alt={alt}
+                aria-hidden={index !== aircraftIndex}
+                width={1024}
+                height={1024}
+                fetchPriority={index === 0 ? 'high' : 'low'}
+                decoding="async"
+                className={`absolute inset-0 size-full object-cover transition-opacity duration-500 motion-reduce:transition-none ${index === aircraftIndex ? 'opacity-100' : 'opacity-0'}`}
+              />
+            ))}
           </div>
         </div>
       </section>
