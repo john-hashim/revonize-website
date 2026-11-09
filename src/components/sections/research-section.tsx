@@ -1,5 +1,7 @@
 import { SectionHeading } from '@/components/common/section-heading'
 import { ActionLink } from '@/components/common/action-link'
+import { ResponsiveImage } from '@/components/common/responsive-image'
+import { aeroWeaveImage } from '@/data/research'
 
 export function ResearchSection() {
   return (
@@ -29,6 +31,10 @@ export function ResearchSection() {
             </p>
           </div>
           <div className="flex flex-col items-start justify-between gap-6">
+            <ResponsiveImage
+              {...aeroWeaveImage}
+              sizes="auto, (min-width: 64rem) min(40vw, 506px), 95vw"
+            />
             <p className="max-w-sm text-base leading-7 text-muted-foreground">
               From digital simulation to physical prototypes, our R&D work
               connects analysis, materials and manufacturing.

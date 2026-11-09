@@ -1,5 +1,6 @@
 import { ArrowUpRight } from 'lucide-react'
 import { Link } from 'react-router'
+import { ResponsiveImage } from '@/components/common/responsive-image'
 import { SectionHeading } from '@/components/common/section-heading'
 import { capabilities } from '@/data/capabilities'
 
@@ -47,7 +48,16 @@ export function CapabilitiesSection() {
                 </div>
               </div>
               <div className="pl-8 sm:pl-10 lg:pl-0">
-                <p className="body-copy max-w-lg">{item.description}</p>
+                <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:gap-5">
+                  <p className="body-copy max-w-lg grow">{item.description}</p>
+                  {item.image && (
+                    <ResponsiveImage
+                      {...item.image}
+                      sizes="auto, (min-width: 64rem) 192px, (min-width: 40rem) 160px, min(80vw, 288px)"
+                      className="max-w-72 shrink-0 sm:w-40 lg:w-48"
+                    />
+                  )}
+                </div>
                 {index === 4 && (
                   <ul className="mt-3 space-y-2 text-sm leading-6 text-muted-foreground">
                     <li>

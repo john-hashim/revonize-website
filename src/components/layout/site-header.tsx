@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { Link, NavLink } from 'react-router'
 import { Menu, ChevronDown } from 'lucide-react'
+import { NavigationCards } from '@/components/layout/navigation-cards'
 import { Button } from '@/components/ui/button'
 import {
   Sheet,
@@ -12,11 +13,10 @@ import {
   SheetTrigger,
 } from '@/components/ui/sheet'
 import { navigation } from '@/data/site'
+import { navigationCards } from '@/data/site-navigation'
 import { cn } from '@/lib/utils'
 
-const headerNavigation = [...navigation, { label: 'Careers', href: '/careers' }].map(
-  (item, index) => ({ ...item, hasPanel: index < 3 }),
-)
+const headerNavigation = [...navigation, { label: 'Careers', href: '/careers' }]
 
 export function SiteHeader() {
   const [menuOpen, setMenuOpen] = useState(false)
@@ -25,6 +25,11 @@ export function SiteHeader() {
 
   function closePanel() {
     setOpenSection(null)
+  }
+
+  function changeMenuOpen(open: boolean) {
+    setMenuOpen(open)
+    if (!open) setOpenMobileSection(null)
   }
 
   return (
@@ -37,7 +42,12 @@ export function SiteHeader() {
         if (!event.currentTarget.contains(event.relatedTarget)) closePanel()
       }}
       onKeyDown={(event) => {
-        if (event.key === 'Escape') closePanel()
+        if (event.key === 'Escape' && openSection) {
+          event.currentTarget
+            .querySelector<HTMLButtonElement>('nav button[aria-expanded="true"]')
+            ?.focus()
+          closePanel()
+        }
       }}
     >
       <div className="container-shell flex min-h-17 items-center justify-between gap-6 xl:grid xl:grid-cols-[1fr_auto_1fr] xl:gap-10">
@@ -58,6 +68,8 @@ export function SiteHeader() {
         >
           {headerNavigation.map((item) => {
             const isOpen = openSection === item.href
+            const cards = navigationCards[item.href]
+            const panelId = `desktop-navigation-panel-${item.href.slice(1)}`
 
             return (
               <div
@@ -65,7 +77,7 @@ export function SiteHeader() {
                 className="flex items-center gap-0.5"
                 onPointerEnter={(event) => {
                   if (event.pointerType === 'mouse') {
-                    setOpenSection(item.hasPanel ? item.href : null)
+                    setOpenSection(cards ? item.href : null)
                   }
                 }}
                 onFocus={() => {
@@ -84,12 +96,12 @@ export function SiteHeader() {
                 >
                   {item.label}
                 </NavLink>
-                {item.hasPanel && (
+                {cards && (
                   <button
                     type="button"
                     aria-label={`${item.label} submenu`}
                     aria-expanded={isOpen}
-                    aria-controls="desktop-navigation-panel"
+                    aria-controls={panelId}
                     className="grid size-6 place-items-center rounded-sm hover:text-primary aria-expanded:text-primary"
                     onClick={() => setOpenSection(isOpen ? null : item.href)}
                   >
@@ -101,6 +113,26 @@ export function SiteHeader() {
                       )}
                     />
                   </button>
+                )}
+                {cards && (
+                  <div
+                    id={panelId}
+                    inert={!isOpen}
+                    className={cn(
+                      'absolute inset-x-0 top-full grid bg-background transition-[grid-template-rows,opacity] duration-300 ease-in-out motion-reduce:transition-none',
+                      isOpen
+                        ? 'z-10 grid-rows-[1fr] opacity-100 shadow-lg'
+                        : 'pointer-events-none grid-rows-[0fr] opacity-0',
+                    )}
+                  >
+                    <div className="min-h-0 overflow-hidden">
+                      <div className="border-y">
+                        <div className="container-shell">
+                          <NavigationCards cards={cards} onNavigate={closePanel} />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
                 )}
               </div>
             )
@@ -117,13 +149,7 @@ export function SiteHeader() {
           >
             <Link to="/contact?topic=engineering">Consult engineering</Link>
           </Button>
-          <Sheet
-            open={menuOpen}
-            onOpenChange={(open) => {
-              setMenuOpen(open)
-              if (!open) setOpenMobileSection(null)
-            }}
-          >
+          <Sheet open={menuOpen} onOpenChange={changeMenuOpen}>
             <SheetTrigger asChild>
               <Button
                 variant="secondary"
@@ -146,10 +172,11 @@ export function SiteHeader() {
                 className="flex flex-col px-6"
               >
                 {[
-                  { label: 'Home', href: '/', hasPanel: false },
+                  { label: 'Home', href: '/' },
                   ...headerNavigation,
                 ].map((item) => {
                   const isOpen = openMobileSection === item.href
+                  const cards = navigationCards[item.href]
                   const panelId = `mobile-navigation-panel-${item.href.slice(1)}`
 
                   return (
@@ -169,7 +196,7 @@ export function SiteHeader() {
                             {item.label}
                           </NavLink>
                         </SheetClose>
-                        {item.hasPanel && (
+                        {cards && (
                           <button
                             type="button"
                             aria-label={`${item.label} submenu`}
@@ -188,7 +215,7 @@ export function SiteHeader() {
                           </button>
                         )}
                       </div>
-                      {item.hasPanel && (
+                      {cards && (
                         <div
                           id={panelId}
                           inert={!isOpen}
@@ -198,7 +225,10 @@ export function SiteHeader() {
                           )}
                         >
                           <div className="min-h-0 overflow-hidden">
-                            <div className="min-h-28" />
+                            <NavigationCards
+                              cards={cards}
+                              onNavigate={() => changeMenuOpen(false)}
+                            />
                           </div>
                         </div>
                       )}
@@ -220,20 +250,6 @@ export function SiteHeader() {
               </nav>
             </SheetContent>
           </Sheet>
-        </div>
-      </div>
-      <div
-        id="desktop-navigation-panel"
-        inert={openSection === null}
-        className={cn(
-          'absolute inset-x-0 top-full hidden bg-background transition-[grid-template-rows,opacity] duration-300 ease-in-out motion-reduce:transition-none xl:grid',
-          openSection
-            ? 'grid-rows-[1fr] opacity-100 shadow-lg'
-            : 'pointer-events-none grid-rows-[0fr] opacity-0',
-        )}
-      >
-        <div className="min-h-0 overflow-hidden">
-          <div className="min-h-56 border-y" />
         </div>
       </div>
     </header>

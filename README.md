@@ -61,9 +61,9 @@ Contact links can preselect `topic`, `product` and `course` through query parame
 - Mobile navigation uses a shadcn Sheet; forms, badges, buttons and academy FAQs use shared shadcn components.
 - Product performance figures, certifications, fees and intake dates are omitted pending final content.
 
-## Replacing UAV photos
+## Replacing site images
 
-Replace the matching WebP pair in `src/assets/images/uav/` with square exports at 1024 × 1024 and 480 × 480. Keep the filenames so the product cards and detail pages pick up the replacements together. Rebuild and deploy the site. Vite updates the built filenames when image contents change, so the new deployment references the new versions.
+Replace the matching WebP pair under `src/assets/images/uav/`, `src/assets/images/engineering/` or `src/assets/images/research/` with square exports at 1024 × 1024 and 480 × 480. Keep the filenames and redeploy. The engineering and UAV pages share the IBEX image pair. Vite updates the built filenames when image contents change, so the new deployment references the new versions.
 
 ## Deployment
 
