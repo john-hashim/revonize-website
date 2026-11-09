@@ -51,6 +51,14 @@ export const router = createBrowserRouter([
         },
       },
       {
+        path: 'careers',
+        element: (
+          <section className="container-shell section-space">
+            <h1 className="text-4xl font-semibold tracking-tight sm:text-5xl">Careers</h1>
+          </section>
+        ),
+      },
+      {
         path: 'contact',
         lazy: {
           Component: async () => (await import('@/pages/contact-page')).ContactPage,

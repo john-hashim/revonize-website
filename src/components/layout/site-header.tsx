@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { Link, NavLink } from 'react-router'
-import { Menu, ArrowUpRight } from 'lucide-react'
+import { Menu, ChevronDown } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import {
   Sheet,
@@ -14,56 +14,116 @@ import {
 import { navigation } from '@/data/site'
 import { cn } from '@/lib/utils'
 
+const headerNavigation = [...navigation, { label: 'Careers', href: '/careers' }].map(
+  (item, index) => ({ ...item, hasPanel: index < 3 }),
+)
+
 export function SiteHeader() {
   const [menuOpen, setMenuOpen] = useState(false)
+  const [openSection, setOpenSection] = useState<string | null>(null)
+  const [openMobileSection, setOpenMobileSection] = useState<string | null>(null)
+
+  function closePanel() {
+    setOpenSection(null)
+  }
 
   return (
-    <header className="sticky top-0 z-40 border-b bg-background">
-      <div className="container-shell flex min-h-20 items-center justify-between gap-5">
-        <Link to="/" aria-label="Rovonize home" className="shrink-0 py-2">
+    <header
+      className="sticky top-0 z-40 border-b bg-background"
+      onPointerLeave={(event) => {
+        if (event.pointerType === 'mouse') closePanel()
+      }}
+      onBlur={(event) => {
+        if (!event.currentTarget.contains(event.relatedTarget)) closePanel()
+      }}
+      onKeyDown={(event) => {
+        if (event.key === 'Escape') closePanel()
+      }}
+    >
+      <div className="container-shell flex min-h-17 items-center justify-between gap-6 xl:grid xl:grid-cols-[1fr_auto_1fr] xl:gap-10">
+        <Link
+          to="/"
+          aria-label="Rovonize home"
+          className="shrink-0 justify-self-start py-2"
+          onPointerEnter={closePanel}
+          onFocus={closePanel}
+        >
           <span className="block text-[1.65rem] font-extrabold leading-none tracking-[-0.075em] text-foreground">
             rovonize<span className="text-primary">.</span>
-          </span>
-          <span className="mt-1.5 block text-[8px] font-medium uppercase tracking-[0.22em] text-muted-foreground">
-            Bridging you & technology
           </span>
         </Link>
         <nav
           aria-label="Main navigation"
-          className="hidden items-center gap-5 xl:flex"
+          className="hidden items-stretch gap-6 self-stretch xl:flex"
         >
-          {navigation.map((item) => (
-            <NavLink
-              key={item.href}
-              to={item.href}
-              className={({ isActive }) =>
-                cn(
-                  'py-7 text-[12px] font-medium transition-colors hover:text-primary',
-                  isActive ? 'text-primary' : 'text-foreground',
-                )
-              }
-            >
-              {item.label}
-            </NavLink>
-          ))}
+          {headerNavigation.map((item) => {
+            const isOpen = openSection === item.href
+
+            return (
+              <div
+                key={item.href}
+                className="flex items-center gap-0.5"
+                onPointerEnter={(event) => {
+                  if (event.pointerType === 'mouse') {
+                    setOpenSection(item.hasPanel ? item.href : null)
+                  }
+                }}
+                onFocus={() => {
+                  if (!isOpen) closePanel()
+                }}
+              >
+                <NavLink
+                  to={item.href}
+                  onClick={closePanel}
+                  className={({ isActive }) =>
+                    cn(
+                      'flex items-center self-stretch whitespace-nowrap text-[0.825rem] font-medium transition-colors hover:text-primary',
+                      isActive || isOpen ? 'text-primary' : 'text-foreground',
+                    )
+                  }
+                >
+                  {item.label}
+                </NavLink>
+                {item.hasPanel && (
+                  <button
+                    type="button"
+                    aria-label={`${item.label} submenu`}
+                    aria-expanded={isOpen}
+                    aria-controls="desktop-navigation-panel"
+                    className="grid size-6 place-items-center rounded-sm hover:text-primary aria-expanded:text-primary"
+                    onClick={() => setOpenSection(isOpen ? null : item.href)}
+                  >
+                    <ChevronDown
+                      aria-hidden="true"
+                      className={cn(
+                        'size-3.5 transition-transform duration-200 motion-reduce:transition-none',
+                        isOpen && 'rotate-180',
+                      )}
+                    />
+                  </button>
+                )}
+              </div>
+            )
+          })}
         </nav>
-        <div className="flex items-center gap-3">
+        <div
+          className="flex items-center gap-3 justify-self-end"
+          onPointerEnter={closePanel}
+          onFocus={closePanel}
+        >
           <Button
             asChild
-            variant="secondary"
-            className="hidden h-11 px-4 text-xs sm:inline-flex"
+            className="hidden text-xs sm:inline-flex"
           >
-            <Link to="/contact?topic=spec-sheet">Request spec sheet</Link>
+            <Link to="/contact?topic=engineering">Consult engineering</Link>
           </Button>
-          <Button
-            asChild
-            className="hidden h-11 px-4 text-xs sm:inline-flex"
+          <Sheet
+            open={menuOpen}
+            onOpenChange={(open) => {
+              setMenuOpen(open)
+              if (!open) setOpenMobileSection(null)
+            }}
           >
-            <Link to="/contact?topic=engineering">
-              Consult engineering <ArrowUpRight aria-hidden="true" />
-            </Link>
-          </Button>
-          <Sheet open={menuOpen} onOpenChange={setMenuOpen}>
             <SheetTrigger asChild>
               <Button
                 variant="secondary"
@@ -85,27 +145,69 @@ export function SiteHeader() {
                 aria-label="Mobile navigation"
                 className="flex flex-col px-6"
               >
-                {[{ label: 'Home', href: '/' }, ...navigation].map((item) => (
-                  <SheetClose key={item.href} asChild>
-                    <NavLink
-                      end={item.href === '/'}
-                      to={item.href}
-                      className={({ isActive }) =>
-                        cn(
-                          'border-b py-4 text-base font-medium',
-                          isActive && 'text-primary',
-                        )
-                      }
-                    >
-                      {item.label}
-                    </NavLink>
-                  </SheetClose>
-                ))}
+                {[
+                  { label: 'Home', href: '/', hasPanel: false },
+                  ...headerNavigation,
+                ].map((item) => {
+                  const isOpen = openMobileSection === item.href
+                  const panelId = `mobile-navigation-panel-${item.href.slice(1)}`
+
+                  return (
+                    <div key={item.href} className="border-b">
+                      <div className="flex items-center gap-2">
+                        <SheetClose asChild>
+                          <NavLink
+                            end={item.href === '/'}
+                            to={item.href}
+                            className={({ isActive }) =>
+                              cn(
+                                'flex-1 py-4 text-[1.1rem] font-medium',
+                                isActive && 'text-primary',
+                              )
+                            }
+                          >
+                            {item.label}
+                          </NavLink>
+                        </SheetClose>
+                        {item.hasPanel && (
+                          <button
+                            type="button"
+                            aria-label={`${item.label} submenu`}
+                            aria-expanded={isOpen}
+                            aria-controls={panelId}
+                            className="grid size-11 shrink-0 place-items-center rounded-sm aria-expanded:text-primary"
+                            onClick={() => setOpenMobileSection(isOpen ? null : item.href)}
+                          >
+                            <ChevronDown
+                              aria-hidden="true"
+                              className={cn(
+                                'size-4 transition-transform duration-200 motion-reduce:transition-none',
+                                isOpen && 'rotate-180',
+                              )}
+                            />
+                          </button>
+                        )}
+                      </div>
+                      {item.hasPanel && (
+                        <div
+                          id={panelId}
+                          inert={!isOpen}
+                          className={cn(
+                            'grid transition-[grid-template-rows] duration-300 ease-in-out motion-reduce:transition-none',
+                            isOpen ? 'grid-rows-[1fr]' : 'grid-rows-[0fr]',
+                          )}
+                        >
+                          <div className="min-h-0 overflow-hidden">
+                            <div className="min-h-28" />
+                          </div>
+                        </div>
+                      )}
+                    </div>
+                  )
+                })}
                 <SheetClose asChild>
                   <Button asChild className="mt-6 min-h-11">
-                    <Link to="/contact?topic=engineering">
-                      Consult engineering <ArrowUpRight aria-hidden="true" />
-                    </Link>
+                    <Link to="/contact?topic=engineering">Consult engineering</Link>
                   </Button>
                 </SheetClose>
                 <SheetClose asChild>
@@ -118,6 +220,20 @@ export function SiteHeader() {
               </nav>
             </SheetContent>
           </Sheet>
+        </div>
+      </div>
+      <div
+        id="desktop-navigation-panel"
+        inert={openSection === null}
+        className={cn(
+          'absolute inset-x-0 top-full hidden bg-background transition-[grid-template-rows,opacity] duration-300 ease-in-out motion-reduce:transition-none xl:grid',
+          openSection
+            ? 'grid-rows-[1fr] opacity-100 shadow-lg'
+            : 'pointer-events-none grid-rows-[0fr] opacity-0',
+        )}
+      >
+        <div className="min-h-0 overflow-hidden">
+          <div className="min-h-56 border-y" />
         </div>
       </div>
     </header>

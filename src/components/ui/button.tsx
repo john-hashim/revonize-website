@@ -12,7 +12,7 @@ const buttonVariants = cva(
         secondary: 'border border-border bg-background text-foreground hover:bg-muted',
       },
       size: {
-        default: 'h-9 px-4 py-2 has-[>svg]:px-3',
+        default: 'h-9 px-2.5 py-1 has-[>svg]:px-2',
         xs: "h-6 gap-1 px-2 text-xs has-[>svg]:px-1.5 [&_svg:not([class*='size-'])]:size-3",
         sm: 'h-8 gap-1.5 px-3 has-[>svg]:px-2.5',
         lg: 'h-10 px-6 has-[>svg]:px-4',
