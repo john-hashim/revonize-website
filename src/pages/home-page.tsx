@@ -9,6 +9,7 @@ import { ContactBanner } from '@/components/sections/contact-banner'
 import { CredentialsSection } from '@/components/sections/credentials-section'
 import { EngineeringServicesSection } from '@/components/sections/engineering-services-section'
 import { LeadershipSection } from '@/components/sections/leadership-section'
+import { MajorIndustriesSection } from '@/components/sections/major-industries-section'
 import { MissionSection } from '@/components/sections/mission-section'
 import { ProductsSection } from '@/components/sections/products-section'
 import { ResearchSection } from '@/components/sections/research-section'
@@ -61,7 +62,7 @@ export function HomePage() {
   }, [])
 
   return (
-    <div className="[&>section]:border-y-0">
+    <div className="[&>section]:border-y-0 [&>section:nth-of-type(odd)]:bg-secondary [&>section:nth-of-type(even)]:bg-background">
       <section className="bg-muted">
         <div className="container-shell grid items-center gap-9 py-12 sm:py-16 lg:grid-cols-[minmax(0,3fr)_minmax(0,2fr)] lg:gap-12 lg:py-20 xl:gap-16">
           <div>
@@ -139,6 +140,7 @@ export function HomePage() {
       <CredentialsSection />
       <MissionSection />
       <EngineeringServicesSection />
+      <MajorIndustriesSection />
       <ProductsSection />
       <ResearchSection />
       <AcademySection />
