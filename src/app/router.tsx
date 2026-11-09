@@ -13,7 +13,7 @@ export const router = createBrowserRouter([
     ),
     children: [
       { index: true, element: <HomePage /> },
-      ...headerPages.map(({ href, label }) => ({
+      ...headerPages.filter(({ href }) => href !== '/about').map(({ href, label }) => ({
         path: href,
         element: (
           <h1 className="container-shell section-space text-4xl font-semibold tracking-tight sm:text-5xl">
@@ -21,6 +21,12 @@ export const router = createBrowserRouter([
           </h1>
         ),
       })),
+      {
+        path: 'about',
+        lazy: {
+          Component: async () => (await import('@/pages/about-page')).AboutPage,
+        },
+      },
       {
         path: 'contact',
         lazy: {
