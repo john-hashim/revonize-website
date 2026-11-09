@@ -10,7 +10,7 @@ const pillarIcons = {
 
 export function MissionSection() {
   return (
-    <section aria-labelledby="mission-heading" className="border-b py-10 sm:py-12">
+    <section aria-labelledby="mission-heading" className="border-b bg-secondary py-10 sm:py-12">
       <div className="container-shell">
         <h2
           id="mission-heading"

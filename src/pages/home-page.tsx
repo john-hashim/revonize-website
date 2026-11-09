@@ -8,6 +8,7 @@ import { ActionLink } from '@/components/common/action-link'
 import { AcademySection } from '@/components/sections/academy-section'
 import { CapabilitiesSection } from '@/components/sections/capabilities-section'
 import { ContactBanner } from '@/components/sections/contact-banner'
+import { CredentialsSection } from '@/components/sections/credentials-section'
 import { LeadershipSection } from '@/components/sections/leadership-section'
 import { MissionSection } from '@/components/sections/mission-section'
 import { ProductsSection } from '@/components/sections/products-section'
@@ -141,6 +142,7 @@ export function HomePage() {
           </figure>
         </div>
       </section>
+      <CredentialsSection />
       <MissionSection />
       <CapabilitiesSection />
       <ProductsSection />

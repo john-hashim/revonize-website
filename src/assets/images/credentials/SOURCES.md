@@ -1,0 +1,4 @@
+- GeM: [Government e-Marketplace](https://gem.gov.in/gem-logo).
+- Kerala Startup Mission: [logo by Kerala Startup Mission](https://commons.wikimedia.org/wiki/File:Kerala_StartUp_Mission_Logo.svg), unmodified, [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/).
+- MSME: [Ministry wordmark from FaMe TN](https://fametn.com/), trimmed and resized.
+- Startup India: [transparent wordmark from the VectorSeek archive](https://vectorseek.com/vector_logo/startup-india-hub-logo-vector/), resized.
