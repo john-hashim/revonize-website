@@ -1,0 +1,11 @@
+:root {
+  --app-primary: #0866e9;
+  --app-primary-hover: #0756c5;
+  --page-background: #ffffff;
+  --page-background-secondary: #f5f7fa;
+  --text-primary: #14243a;
+  --text-secondary: #536176;
+  --border-color: #cbd5e1;
+  --radius-medium: 0.375rem;
+  --destructive: #c72c36;
+}

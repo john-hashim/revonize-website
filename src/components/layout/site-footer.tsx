@@ -1,0 +1,96 @@
+import { Link } from 'react-router'
+import { company, navigation } from '@/data/site'
+import { products } from '@/data/products'
+
+export function SiteFooter() {
+  return (
+    <footer className="border-t bg-background text-foreground">
+      <div className="container-shell grid gap-10 py-14 sm:grid-cols-2 lg:grid-cols-[1.3fr_0.8fr_0.8fr_1.25fr] lg:gap-12 lg:py-20">
+        <div>
+          <Link to="/" className="text-2xl font-extrabold tracking-[-0.06em]">
+            rovonize<span className="text-primary">.</span>
+          </Link>
+          <p className="mt-5 max-w-xs text-sm leading-7 text-muted-foreground">
+            Aerospace engineering, precision manufacturing and practical
+            technology education. Designed and developed in Kerala, India.
+          </p>
+          <p className="mt-5 text-xs uppercase tracking-widest text-primary">
+            Bridging you & technology
+          </p>
+        </div>
+        <div>
+          <h2 className="mb-5 text-xs font-semibold uppercase tracking-widest text-primary">
+            UAV platforms
+          </h2>
+          <ul className="space-y-3 text-sm text-muted-foreground">
+            {products.map((product) => (
+              <li key={product.slug}>
+                <Link
+                  className="transition-colors hover:text-primary-hover"
+                  to={`/products/${product.slug}`}
+                >
+                  {product.name}
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </div>
+        <div>
+          <h2 className="mb-5 text-xs font-semibold uppercase tracking-widest text-primary">
+            Explore Rovonize
+          </h2>
+          <ul className="space-y-3 text-sm text-muted-foreground">
+            {navigation.slice(1).map((item) => (
+              <li key={item.href}>
+                <Link
+                  className="transition-colors hover:text-primary-hover"
+                  to={item.href}
+                >
+                  {item.label}
+                </Link>
+              </li>
+            ))}
+            <li>
+              <Link to="/contact" className="hover:text-primary-hover">
+                Contact
+              </Link>
+            </li>
+          </ul>
+        </div>
+        <div>
+          <h2 className="mb-5 text-xs font-semibold uppercase tracking-widest text-primary">
+            Direct enquiries
+          </h2>
+          <address className="space-y-4 text-sm not-italic leading-6 text-muted-foreground">
+            <p>{company.address}</p>
+            <div>
+              {company.phones.map((phone) => (
+                <a
+                  className="block w-fit py-1 hover:text-primary-hover"
+                  key={phone.href}
+                  href={phone.href}
+                >
+                  {phone.label}
+                </a>
+              ))}
+            </div>
+            <a
+              className="inline-block break-all text-primary hover:underline"
+              href={`mailto:${company.email}`}
+            >
+              {company.email}
+            </a>
+          </address>
+        </div>
+      </div>
+      <div className="border-t">
+        <div className="container-shell flex flex-col justify-between gap-3 py-5 text-xs text-muted-foreground sm:flex-row">
+          <p>
+            © {new Date().getFullYear()} {company.name}. All rights reserved.
+          </p>
+          <p>Design. Simulate. Manufacture. Innovate. Learn.</p>
+        </div>
+      </div>
+    </footer>
+  )
+}
