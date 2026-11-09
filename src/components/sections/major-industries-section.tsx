@@ -7,7 +7,7 @@ export function MajorIndustriesSection() {
     <section
       id="major-industries"
       aria-labelledby="major-industries-heading"
-      className="bg-secondary py-12 sm:py-14 lg:py-16"
+      className="bg-secondary py-[2.4rem] sm:py-[2.8rem] lg:py-[3.2rem]"
     >
       <div className="container-shell">
         <div className="mb-8 text-center sm:mb-10">
