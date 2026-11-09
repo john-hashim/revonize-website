@@ -4,6 +4,7 @@ import { aeroWeaveImage } from '@/data/research'
 
 export type NavigationCard = {
   label: string
+  subtitle: string
   href: string
   image: { full: string; small: string }
 }
@@ -11,6 +12,7 @@ export type NavigationCard = {
 export const navigationCards: Partial<Record<string, NavigationCard[]>> = {
   '/products': products.map((product) => ({
     label: product.name,
+    subtitle: `${product.format} · ${product.application}`,
     href: `/products/${product.slug}`,
     image: product.image,
   })),
@@ -18,6 +20,7 @@ export const navigationCards: Partial<Record<string, NavigationCard[]>> = {
     capability.image
       ? [{
           label: capability.title,
+          subtitle: capability.category,
           href: `/engineering#${capability.id}`,
           image: capability.image,
         }]
@@ -25,6 +28,7 @@ export const navigationCards: Partial<Record<string, NavigationCard[]>> = {
   ),
   '/research': [{
     label: 'Aerospace composite research',
+    subtitle: 'Project AeroWeave',
     href: '/research',
     image: aeroWeaveImage,
   }],

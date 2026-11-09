@@ -2,6 +2,8 @@ import { Link } from 'react-router'
 import { company, navigation } from '@/data/site'
 import { products } from '@/data/products'
 
+const copyrightYear = new Date().getFullYear()
+
 export function SiteFooter() {
   return (
     <footer className="border-t bg-background text-foreground">
@@ -86,7 +88,7 @@ export function SiteFooter() {
       <div className="border-t">
         <div className="container-shell flex flex-col justify-between gap-3 py-5 text-xs text-muted-foreground sm:flex-row">
           <p>
-            © {new Date().getFullYear()} {company.name}. All rights reserved.
+            © {copyrightYear} {company.name}. All rights reserved.
           </p>
           <p>Design. Simulate. Manufacture. Innovate. Learn.</p>
         </div>

@@ -1,4 +1,11 @@
-import { useState } from 'react'
+import {
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+  type KeyboardEvent,
+  type PointerEvent as ReactPointerEvent,
+} from 'react'
 import { Link, NavLink } from 'react-router'
 import { Menu, ChevronDown } from 'lucide-react'
 import { NavigationCards } from '@/components/layout/navigation-cards'
@@ -17,14 +24,66 @@ import { navigationCards } from '@/data/site-navigation'
 import { cn } from '@/lib/utils'
 
 const headerNavigation = [...navigation, { label: 'Careers', href: '/careers' }]
+const desktopSlides = headerNavigation.flatMap((item, index) => {
+  const cards = navigationCards[item.href]
+  return cards ? [{ index, id: `desktop-navigation-panel-${item.href.slice(1)}`, cards }] : []
+})
 
 export function SiteHeader() {
+  const headerRef = useRef<HTMLElement>(null)
   const [menuOpen, setMenuOpen] = useState(false)
-  const [openSection, setOpenSection] = useState<string | null>(null)
+  const [desktopPanel, setDesktopPanel] = useState<{
+    index: number
+    previousIndex: number | null
+    open: boolean
+  }>({ index: 0, previousIndex: null, open: false })
   const [openMobileSection, setOpenMobileSection] = useState<string | null>(null)
 
-  function closePanel() {
-    setOpenSection(null)
+  const closePanel = useCallback(() => {
+    setDesktopPanel((current) =>
+      current.open ? { ...current, open: false, previousIndex: null } : current,
+    )
+  }, [])
+
+  useEffect(() => {
+    const header = headerRef.current
+    if (!header) return
+
+    function handlePointerLeave(event: PointerEvent) {
+      if (event.pointerType === 'mouse') closePanel()
+    }
+
+    const handleFocusOut = (event: FocusEvent) => {
+      if (!(event.relatedTarget instanceof Node) || !header.contains(event.relatedTarget)) {
+        closePanel()
+      }
+    }
+
+    // Dismiss only when the pointer or focus leaves the entire header and panel.
+    header.addEventListener('pointerleave', handlePointerLeave)
+    header.addEventListener('focusout', handleFocusOut)
+    return () => {
+      header.removeEventListener('pointerleave', handlePointerLeave)
+      header.removeEventListener('focusout', handleFocusOut)
+    }
+  }, [closePanel])
+
+  function openPanel(index: number) {
+    setDesktopPanel((current) =>
+      current.open && current.index === index
+        ? current
+        : { index, previousIndex: current.open ? current.index : null, open: true },
+    )
+  }
+
+  function dismissPanel(event: KeyboardEvent<HTMLAnchorElement | HTMLButtonElement>) {
+    if (event.key !== 'Escape' || !desktopPanel.open) return
+
+    event.currentTarget
+      .closest('nav')
+      ?.querySelector<HTMLButtonElement>('button[aria-expanded="true"]')
+      ?.focus()
+    closePanel()
   }
 
   function changeMenuOpen(open: boolean) {
@@ -34,21 +93,8 @@ export function SiteHeader() {
 
   return (
     <header
+      ref={headerRef}
       className="sticky top-0 z-40 border-b bg-background"
-      onPointerLeave={(event) => {
-        if (event.pointerType === 'mouse') closePanel()
-      }}
-      onBlur={(event) => {
-        if (!event.currentTarget.contains(event.relatedTarget)) closePanel()
-      }}
-      onKeyDown={(event) => {
-        if (event.key === 'Escape' && openSection) {
-          event.currentTarget
-            .querySelector<HTMLButtonElement>('nav button[aria-expanded="true"]')
-            ?.focus()
-          closePanel()
-        }
-      }}
     >
       <div className="container-shell flex min-h-17 items-center justify-between gap-6 xl:grid xl:grid-cols-[1fr_auto_1fr] xl:gap-10">
         <Link
@@ -66,27 +112,29 @@ export function SiteHeader() {
           aria-label="Main navigation"
           className="hidden items-stretch gap-6 self-stretch xl:flex"
         >
-          {headerNavigation.map((item) => {
-            const isOpen = openSection === item.href
+          {headerNavigation.map((item, index) => {
+            const isOpen = desktopPanel.open && desktopPanel.index === index
             const cards = navigationCards[item.href]
             const panelId = `desktop-navigation-panel-${item.href.slice(1)}`
 
+            function handlePointerEnter(event: ReactPointerEvent<HTMLAnchorElement | HTMLButtonElement>) {
+              if (event.pointerType !== 'mouse') return
+              if (cards) openPanel(index)
+              else closePanel()
+            }
+
+            function handleFocus() {
+              if (!isOpen) closePanel()
+            }
+
             return (
-              <div
-                key={item.href}
-                className="flex items-center gap-0.5"
-                onPointerEnter={(event) => {
-                  if (event.pointerType === 'mouse') {
-                    setOpenSection(cards ? item.href : null)
-                  }
-                }}
-                onFocus={() => {
-                  if (!isOpen) closePanel()
-                }}
-              >
+              <div key={item.href} className="flex items-center gap-0.5">
                 <NavLink
                   to={item.href}
                   onClick={closePanel}
+                  onPointerEnter={handlePointerEnter}
+                  onFocus={handleFocus}
+                  onKeyDown={dismissPanel}
                   className={({ isActive }) =>
                     cn(
                       'flex items-center self-stretch whitespace-nowrap text-[0.825rem] font-medium transition-colors hover:text-primary',
@@ -103,7 +151,18 @@ export function SiteHeader() {
                     aria-expanded={isOpen}
                     aria-controls={panelId}
                     className="grid size-6 place-items-center rounded-sm hover:text-primary aria-expanded:text-primary"
-                    onClick={() => setOpenSection(isOpen ? null : item.href)}
+                    onClick={() => (isOpen ? closePanel() : openPanel(index))}
+                    onPointerEnter={handlePointerEnter}
+                    onFocus={handleFocus}
+                    onKeyDown={(event) => {
+                      dismissPanel(event)
+                      if (!isOpen || event.key !== 'Tab' || event.shiftKey) return
+                      const firstCard = document.getElementById(panelId)?.querySelector('a')
+                      if (firstCard) {
+                        event.preventDefault()
+                        firstCard.focus()
+                      }
+                    }}
                   >
                     <ChevronDown
                       aria-hidden="true"
@@ -114,40 +173,80 @@ export function SiteHeader() {
                     />
                   </button>
                 )}
-                {cards && (
-                  <div
-                    id={panelId}
-                    inert={!isOpen}
-                    className={cn(
-                      'absolute inset-x-0 top-full grid bg-background transition-[grid-template-rows,opacity] duration-300 ease-in-out motion-reduce:transition-none',
-                      isOpen
-                        ? 'z-10 grid-rows-[1fr] opacity-100 shadow-lg'
-                        : 'pointer-events-none grid-rows-[0fr] opacity-0',
-                    )}
-                  >
-                    <div className="min-h-0 overflow-hidden">
-                      <div className="border-y">
-                        <div className="container-shell">
-                          <NavigationCards cards={cards} onNavigate={closePanel} />
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                )}
               </div>
             )
           })}
+          <div
+            inert={!desktopPanel.open}
+            className={cn(
+              'absolute inset-x-0 top-full grid bg-background transition-[grid-template-rows,opacity] duration-300 ease-in-out motion-reduce:transition-none',
+              desktopPanel.open
+                ? 'grid-rows-[1fr] opacity-100 shadow-lg'
+                : 'pointer-events-none grid-rows-[0fr] opacity-0',
+            )}
+          >
+            <div className="min-h-0 overflow-hidden">
+              <div className="grid border-y">
+                {desktopSlides.map((slide) => (
+                  <div
+                    key={slide.id}
+                    id={slide.id}
+                    inert={desktopPanel.index !== slide.index}
+                    className={cn(
+                      'col-start-1 row-start-1',
+                      desktopPanel.previousIndex !== null &&
+                        'transition-transform duration-300 ease-in-out motion-reduce:transition-none',
+                      slide.index !== desktopPanel.index &&
+                        slide.index !== desktopPanel.previousIndex && 'invisible',
+                      slide.index < desktopPanel.index && '-translate-x-full',
+                      slide.index > desktopPanel.index && 'translate-x-full',
+                    )}
+                  >
+                    <div className="container-shell">
+                      <NavigationCards
+                        cards={slide.cards}
+                        onNavigate={closePanel}
+                        onCardKeyDown={(event, index) => {
+                          dismissPanel(event)
+                          if (event.key !== 'Tab') return
+
+                          // Keep tab order aligned with the trigger despite the shared panel.
+                          const nextItem = headerNavigation[slide.index + 1]
+                          let selector: string
+                          if (event.shiftKey && index === 0) {
+                            selector = `button[aria-controls="${slide.id}"]`
+                          } else if (!event.shiftKey && index === slide.cards.length - 1 && nextItem) {
+                            selector = `a[href="${nextItem.href}"]`
+                          } else {
+                            return
+                          }
+
+                          const target = event.currentTarget.closest('nav')?.querySelector<HTMLElement>(selector)
+                          if (target) {
+                            event.preventDefault()
+                            target.focus()
+                          }
+                        }}
+                      />
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
         </nav>
-        <div
-          className="flex items-center gap-3 justify-self-end"
-          onPointerEnter={closePanel}
-          onFocus={closePanel}
-        >
+        <div className="flex items-center gap-3 justify-self-end">
           <Button
             asChild
             className="hidden text-xs sm:inline-flex"
           >
-            <Link to="/contact?topic=engineering">Consult engineering</Link>
+            <Link
+              to="/contact?topic=engineering"
+              onPointerEnter={closePanel}
+              onFocus={closePanel}
+            >
+              Consult engineering
+            </Link>
           </Button>
           <Sheet open={menuOpen} onOpenChange={changeMenuOpen}>
             <SheetTrigger asChild>
@@ -156,6 +255,8 @@ export function SiteHeader() {
                 size="icon"
                 className="size-11 xl:hidden"
                 aria-label="Open navigation menu"
+                onPointerEnter={closePanel}
+                onFocus={closePanel}
               >
                 <Menu aria-hidden="true" />
               </Button>
