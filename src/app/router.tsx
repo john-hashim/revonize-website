@@ -13,14 +13,42 @@ export const router = createBrowserRouter([
     ),
     children: [
       { index: true, element: <HomePage /> },
-      ...headerPages.filter(({ href }) => href !== '/about').map(({ href, label }) => ({
-        path: href,
-        element: (
-          <h1 className="container-shell section-space text-4xl font-semibold tracking-tight sm:text-5xl">
-            Details about {label}
-          </h1>
-        ),
-      })),
+      ...headerPages
+        .filter(({ href }) =>
+          href !== '/about' && !/^\/(engineering|products)(\/|$)/.test(href),
+        )
+        .map(({ href, label }) => ({
+          path: href,
+          element: (
+            <h1 className="container-shell section-space text-4xl font-semibold tracking-tight sm:text-5xl">
+              Details about {label}
+            </h1>
+          ),
+        })),
+      {
+        path: 'products',
+        lazy: {
+          Component: async () => (await import('@/pages/products-page')).ProductsPage,
+        },
+      },
+      {
+        path: 'products/:slug',
+        lazy: {
+          Component: async () => (await import('@/pages/product-detail-page')).ProductDetailPage,
+        },
+      },
+      {
+        path: 'engineering',
+        lazy: {
+          Component: async () => (await import('@/pages/engineering-page')).EngineeringPage,
+        },
+      },
+      {
+        path: 'engineering/:serviceId',
+        lazy: {
+          Component: async () => (await import('@/pages/engineering-service-page')).EngineeringServicePage,
+        },
+      },
       {
         path: 'about',
         lazy: {

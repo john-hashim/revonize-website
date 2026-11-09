@@ -24,7 +24,7 @@ export function ActionLink({
       asChild
       variant={variant}
       className={cn(
-        'h-auto min-h-11 max-w-full whitespace-normal px-5 py-3 text-left text-sm',
+        'h-auto min-h-9 max-w-full whitespace-normal text-left',
         className,
       )}
     >

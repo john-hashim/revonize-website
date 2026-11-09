@@ -243,7 +243,7 @@ export function SiteHeader() {
               onPointerEnter={closePanel}
               onFocus={closePanel}
             >
-              Consult engineering
+              Consult Engineering
             </Link>
           </Button>
           <Sheet open={menuOpen} onOpenChange={changeMenuOpen}>
@@ -336,7 +336,7 @@ export function SiteHeader() {
                 })}
                 <SheetClose asChild>
                   <Button asChild className="mt-6 min-h-11">
-                    <Link to={requestQuote.href}>Consult engineering</Link>
+                    <Link to={requestQuote.href}>Consult Engineering</Link>
                   </Button>
                 </SheetClose>
                 <SheetClose asChild>

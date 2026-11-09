@@ -1,4 +1,6 @@
 import { Link } from 'react-router'
+import socialIcons from '@/assets/social-icons.svg?no-inline'
+import { mission } from '@/data/company'
 import { company, navigation } from '@/data/site'
 import { products } from '@/data/products'
 
@@ -12,12 +14,27 @@ export function SiteFooter() {
           <Link to="/" className="text-2xl font-extrabold tracking-[-0.06em]">
             rovonize<span className="text-primary">.</span>
           </Link>
+          <ul aria-label="Social media" className="mt-3 flex flex-wrap gap-1">
+            {company.socialLinks.map(({ label, icon, href }) => (
+              <li key={icon}>
+                <a
+                  href={href}
+                  aria-label={`Rovonize on ${label}`}
+                  className="grid size-11 place-items-center rounded-md text-muted-foreground transition-colors hover:bg-muted hover:text-foreground focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-foreground"
+                >
+                  <svg className="size-4.5 fill-current" aria-hidden="true">
+                    <use href={`${socialIcons}#${icon}`} />
+                  </svg>
+                </a>
+              </li>
+            ))}
+          </ul>
           <p className="mt-5 max-w-xs text-sm leading-7 text-muted-foreground">
-            Aerospace engineering, precision manufacturing and practical
-            technology education. Designed and developed in Kerala, India.
+            UAV development, precision manufacturing, aerospace research and
+            hands-on technical education in Kerala, India.
           </p>
           <p className="mt-5 text-xs uppercase tracking-widest text-primary">
-            Bridging you & technology
+            {mission.title}
           </p>
         </div>
         <div>
@@ -64,7 +81,14 @@ export function SiteFooter() {
             Direct enquiries
           </h2>
           <address className="space-y-4 text-sm not-italic leading-6 text-muted-foreground">
-            <p>{company.address}</p>
+            <div>
+              <p className="font-semibold text-foreground">Head office</p>
+              <p>{company.headOfficeAddress}</p>
+            </div>
+            <div>
+              <p className="font-semibold text-foreground">Research centre</p>
+              <p>{company.address}</p>
+            </div>
             <div>
               {company.phones.map((phone) => (
                 <a

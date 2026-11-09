@@ -5,9 +5,9 @@ import stemHeroImage from '@/assets/images/uav/stem-hero.webp'
 import veekshaHeroImage from '@/assets/images/uav/veeksha-hero.webp'
 import { ActionLink } from '@/components/common/action-link'
 import { AcademySection } from '@/components/sections/academy-section'
-import { CapabilitiesSection } from '@/components/sections/capabilities-section'
 import { ContactBanner } from '@/components/sections/contact-banner'
 import { CredentialsSection } from '@/components/sections/credentials-section'
+import { EngineeringServicesSection } from '@/components/sections/engineering-services-section'
 import { LeadershipSection } from '@/components/sections/leadership-section'
 import { MissionSection } from '@/components/sections/mission-section'
 import { ProductsSection } from '@/components/sections/products-section'
@@ -138,7 +138,7 @@ export function HomePage() {
       </section>
       <CredentialsSection />
       <MissionSection />
-      <CapabilitiesSection />
+      <EngineeringServicesSection />
       <ProductsSection />
       <ResearchSection />
       <AcademySection />

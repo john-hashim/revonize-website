@@ -1,48 +1,69 @@
+import { BadgeCheck } from 'lucide-react'
+import engineeringHero from '@/assets/images/engineering/engineering-services-hero.webp'
+import { CatalogCard } from '@/components/common/catalog-card'
 import { PageIntro } from '@/components/common/page-intro'
-import { ActionLink } from '@/components/common/action-link'
-import { SectionHeading } from '@/components/common/section-heading'
-import { CapabilitiesSection } from '@/components/sections/capabilities-section'
-import { ContactBanner } from '@/components/sections/contact-banner'
-import { engineeringWorkflow } from '@/data/capabilities'
+import { engineeringServices } from '@/data/capabilities'
 
 export function EngineeringPage() {
   return (
     <>
       <PageIntro
+        compact
         eyebrow="Engineering services"
-        title="One engineering continuum."
-        description="Connect digital design, structural analysis, electronics and manufacturing through a practical development workflow."
-      >
-        <ActionLink to="/contact?topic=engineering">
-          Discuss your project
-        </ActionLink>
-      </PageIntro>
-      <CapabilitiesSection />
-      <section className="section-space bg-muted">
-        <div className="container-shell">
-          <SectionHeading
-            eyebrow="Operational workflow"
-            title="From digital design to physical validation."
-            description="A connected approach to developing components and systems, with engineering decisions carried through every stage."
+        title="Engineering Services"
+        description="Bring your design from concept to production with 3D modelling and simulation, PCB development, carbon fibre moulding, and precision CNC machining."
+        visual={
+          <img
+            src={engineeringHero}
+            alt="Carbon fibre moulding, circuit boards, a machined bracket and a simulated bracket arranged on a single platform"
+            width={1200}
+            height={800}
+            fetchPriority="high"
+            className="mx-auto h-auto w-[85%] max-w-[29rem]"
           />
-          <ol className="grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
-            {engineeringWorkflow.map((step, i) => (
-              <li key={step.title} className="border-t-2 pt-5">
-                <span className="text-xs font-medium text-primary">
-                  0{i + 1}
-                </span>
-                <h3 className="mb-3 mt-6 text-lg font-semibold">
-                  {step.title}
-                </h3>
-                <p className="text-sm leading-7 text-muted-foreground">
-                  {step.description}
-                </p>
-              </li>
+        }
+      >
+        <div className="inline-flex items-center gap-3 rounded-md border bg-background px-4 py-3">
+          <BadgeCheck aria-hidden="true" className="size-7 shrink-0 text-primary" strokeWidth={1.6} />
+          <div>
+            <p className="text-[0.6125rem]/[0.875rem] font-semibold">ISO 9001:2015</p>
+            <p className="mt-0.5 text-[0.525rem]/[0.7rem] text-muted-foreground">Quality management</p>
+          </div>
+        </div>
+      </PageIntro>
+
+      <section aria-labelledby="manufacturing-services-heading" className="bg-background py-12 sm:py-16">
+        <div className="container-shell">
+          <h2
+            id="manufacturing-services-heading"
+            className="mb-8 text-center text-3xl font-semibold tracking-tight sm:mb-10 sm:text-4xl"
+          >
+            Choose a Manufacturing Service
+          </h2>
+          <ul className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+            {engineeringServices.map(({ id, title, description, preview }) => (
+              <CatalogCard
+                key={id}
+                id={id}
+                to={`/engineering/${id}`}
+                title={title}
+                description={description}
+                action="View service"
+                image={
+                  <img
+                    {...preview}
+                    width={576}
+                    height={384}
+                    loading="lazy"
+                    decoding="async"
+                    className="h-auto w-full max-w-48"
+                  />
+                }
+              />
             ))}
-          </ol>
+          </ul>
         </div>
       </section>
-      <ContactBanner />
     </>
   )
 }
