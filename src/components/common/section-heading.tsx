@@ -1,6 +1,9 @@
+import { cn } from '@/lib/utils'
+
 type SectionHeadingProps = {
-  eyebrow: string
+  eyebrow?: string
   title: string
+  titleClassName?: string
   description?: string
   id?: string
 }
@@ -8,16 +11,20 @@ type SectionHeadingProps = {
 export function SectionHeading({
   eyebrow,
   title,
+  titleClassName,
   description,
   id,
 }: SectionHeadingProps) {
   return (
     <div className="mb-10 grid gap-5 lg:mb-12 lg:grid-cols-[1.25fr_1fr] lg:items-end lg:gap-16">
       <div>
-        <p className="eyebrow mb-4">{eyebrow}</p>
+        {eyebrow && <p className="eyebrow mb-4">{eyebrow}</p>}
         <h2
           id={id}
-          className="max-w-3xl text-3xl font-semibold leading-tight tracking-tight sm:text-4xl lg:text-[2.65rem]"
+          className={cn(
+            'max-w-3xl text-3xl font-semibold leading-tight tracking-tight sm:text-4xl lg:text-[2.65rem]',
+            titleClassName,
+          )}
         >
           {title}
         </h2>

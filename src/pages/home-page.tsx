@@ -8,7 +8,6 @@ import { AcademySection } from '@/components/sections/academy-section'
 import { ContactBanner } from '@/components/sections/contact-banner'
 import { CredentialsSection } from '@/components/sections/credentials-section'
 import { EngineeringServicesSection } from '@/components/sections/engineering-services-section'
-import { LeadershipSection } from '@/components/sections/leadership-section'
 import { MajorIndustriesSection } from '@/components/sections/major-industries-section'
 import { MissionSection } from '@/components/sections/mission-section'
 import { ProductsSection } from '@/components/sections/products-section'
@@ -138,13 +137,12 @@ export function HomePage() {
         </div>
       </section>
       <CredentialsSection />
-      <MissionSection />
       <EngineeringServicesSection />
       <MajorIndustriesSection />
+      <MissionSection />
       <ProductsSection />
       <ResearchSection />
       <AcademySection />
-      <LeadershipSection />
       <ContactBanner />
     </div>
   )

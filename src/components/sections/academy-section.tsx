@@ -13,14 +13,14 @@ export function AcademySection({
     <section
       id="courses"
       aria-label="Engineering academy courses"
-      className="section-space bg-muted"
+      className={standalone ? 'section-space bg-muted' : 'bg-muted py-[3.2rem] sm:py-16 lg:py-[4.8rem]'}
     >
       <div className="container-shell">
         {!standalone && (
           <SectionHeading
-            eyebrow="Rovonize engineering academy"
-            title="Learn by bringing ideas to life."
-            description="Bridge academic theory and practical engineering with hands-on training in robotics, drones, electronics and technology."
+            title="Engineering & technology courses"
+            titleClassName="text-2xl sm:text-[1.8rem] lg:text-[2.12rem]"
+            description="Hands-on training in Robotics, Drones, Electronics & Technologies."
           />
         )}
         <div className="grid gap-6 md:grid-cols-2">

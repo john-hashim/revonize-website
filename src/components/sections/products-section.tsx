@@ -130,7 +130,7 @@ export function ProductsSection() {
             })}
           </ol>
         </div>
-        <figure className="relative aspect-[3/2] overflow-hidden rounded-md bg-primary/7">
+        <figure className="relative aspect-[3/2] overflow-hidden rounded-md bg-secondary">
           {products.map(({ slug, name, format, preview }, index) => {
             const active = index === activeIndex
 
