@@ -44,7 +44,7 @@ function CredentialLogos({ duplicate = false }: { duplicate?: boolean }) {
 export function CredentialsSection() {
   return (
     <section aria-labelledby="credentials-heading" className="border-b bg-background">
-      <div className="container-shell py-4 sm:py-5">
+      <div className="container-shell py-6.5 sm:py-[calc(var(--spacing)*8.125)]">
         <h2 id="credentials-heading" className="eyebrow mb-3 text-center text-muted-foreground">
           Programs &amp; Certifications
         </h2>

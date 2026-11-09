@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react'
-import { Link } from 'react-router'
 import ibexHeroImage from '@/assets/images/uav/ibex-hero.webp'
 import spectraHeroImage from '@/assets/images/uav/spectra-hero.webp'
 import stemHeroImage from '@/assets/images/uav/stem-hero.webp'
@@ -62,16 +61,16 @@ export function HomePage() {
   }, [])
 
   return (
-    <>
-      <section className="border-b bg-muted">
+    <div className="[&>section]:border-y-0">
+      <section className="bg-muted">
         <div className="container-shell grid items-center gap-9 py-12 sm:py-16 lg:grid-cols-[minmax(0,3fr)_minmax(0,2fr)] lg:gap-12 lg:py-20 xl:gap-16">
           <div>
-            <h1 className="text-[clamp(1.5rem,7vw,3.75rem)] font-semibold leading-[1.08] tracking-[-0.045em] sm:text-[clamp(2.75rem,5.4vw,3.75rem)] lg:text-[clamp(2.75rem,4.2vw,3.75rem)]">
+            <h1 className="text-[clamp(2rem,10vw,2.75rem)] font-semibold leading-[1.08] tracking-[-0.045em] max-sm:text-center sm:text-[clamp(2.75rem,5.4vw,3.75rem)] lg:text-[clamp(2.75rem,4.2vw,3.75rem)]">
               <span className="sr-only">
                 We design and build UAVs, composite structures, custom electronics
                 and precision components.
               </span>
-              <span aria-hidden="true" className="block">
+              <span aria-hidden="true" className="block max-sm:text-balance">
                 We design and build
               </span>
               <span aria-hidden="true" className="grid overflow-hidden text-primary">
@@ -87,7 +86,11 @@ export function HomePage() {
                 ))}
               </span>
             </h1>
-            <div className="mt-6 max-w-2xl space-y-3 text-sm leading-6 text-muted-foreground">
+            <p className="mt-4 text-center text-sm leading-6 text-muted-foreground sm:hidden">
+              We build high-performance drones in Kochi for industry, agriculture,
+              defence and commercial use.
+            </p>
+            <div className="mt-6 hidden max-w-2xl space-y-3 text-sm leading-6 text-muted-foreground sm:block">
               <p>
                 At Rovonize Systems, we are redefining the future of aerial technology
                 by manufacturing advanced, high-performance drones tailored for diverse
@@ -108,15 +111,6 @@ export function HomePage() {
               <ActionLink to="/engineering" variant="secondary">
                 View Engineering Services
               </ActionLink>
-            </div>
-            <div className="mt-8 border-t pt-4">
-              <Link
-                to="/contact"
-                aria-label="Ask Rovonize about Certification and Compliance"
-                className="text-sm font-medium text-muted-foreground underline underline-offset-4 hover:text-primary"
-              >
-                Certification + Compliance
-              </Link>
             </div>
           </div>
           <figure className="mx-auto w-full max-w-[480px]">
@@ -150,6 +144,6 @@ export function HomePage() {
       <AcademySection />
       <LeadershipSection />
       <ContactBanner />
-    </>
+    </div>
   )
 }
