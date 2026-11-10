@@ -12,11 +12,11 @@ export function ProductsPage() {
         compact
         eyebrow="UAV products"
         title="UAV Products"
-        description="Explore Rovonize’s foldable quadrotor, fixed-wing and helicopter UAVs for reconnaissance and surveillance, plus a quadrotor for hands-on drone education."
+        description="Compare four UAV platforms for aerial mapping, inspection, surveillance and high-altitude logistics."
         visual={
           <AssetImage
             src={uavLineup}
-            alt="Illustration of Spectra, Veeksha, IBEX and STEM in flight"
+            alt="Illustration of Spectra, Veeksha, Ibex and ROV-STEM in flight"
             width={1200}
             height={800}
             fetchPriority="high"
@@ -38,18 +38,18 @@ export function ProductsPage() {
             Choose a UAV Platform
           </h2>
           <ul className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
-            {products.map(({ slug, name, format, description, preview }) => (
+            {products.map(({ slug, name, summary, preview }) => (
               <CatalogCard
                 key={slug}
                 to={`/products/${slug}`}
                 title={name}
-                description={description}
+                description={summary}
                 action="View product"
                 image={
                   <AssetImage
                     src={preview}
                     sizes="192px"
-                    alt={`${name} ${format.toLowerCase()} UAV`}
+                    alt={`Illustration of ${name}`}
                     width={1024}
                     height={1024}
                     loading="lazy"

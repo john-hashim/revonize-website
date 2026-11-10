@@ -1,9 +1,5 @@
 import { AssetImage } from '@/components/common/asset-image'
 import { useEffect, useRef, useState } from 'react'
-import ibexHeroImage from '@/assets/images/uav/ibex-hero.webp'
-import spectraHeroImage from '@/assets/images/uav/spectra-hero.webp'
-import stemHeroImage from '@/assets/images/uav/stem-hero.webp'
-import veekshaHeroImage from '@/assets/images/uav/veeksha-hero.webp'
 import { ActionLink } from '@/components/common/action-link'
 import { AcademySection } from '@/components/sections/academy-section'
 import { ContactBanner } from '@/components/sections/contact-banner'
@@ -12,7 +8,8 @@ import { EngineeringServicesSection } from '@/components/sections/engineering-se
 import { MajorIndustriesSection } from '@/components/sections/major-industries-section'
 import { MissionSection } from '@/components/sections/mission-section'
 import { ProductsSection } from '@/components/sections/products-section'
-import { ResearchSection } from '@/components/sections/research-section'
+// import { ResearchSection } from '@/components/sections/research-section'
+import { products } from '@/data/products'
 
 const heroHeadlineEndings = [
   'UAVs.',
@@ -21,12 +18,10 @@ const heroHeadlineEndings = [
   'Precision components.',
 ]
 
-const heroAircraft = [
-  { src: spectraHeroImage, caption: 'Spectra · Foldable quadrotor' },
-  { src: veekshaHeroImage, caption: 'Veeksha · Fixed-wing UAV' },
-  { src: ibexHeroImage, caption: 'IBEX · Helicopter UAV' },
-  { src: stemHeroImage, caption: 'STEM · Education quadrotor' },
-]
+const heroAircraft = products.map(({ name, format, preview }) => ({
+  src: preview,
+  caption: `${name} · ${format}`,
+}))
 
 const heroRotationInterval = 2134
 
@@ -94,26 +89,10 @@ export function HomePage() {
                 ))}
               </span>
             </h1>
-            <p className="mt-4 text-center text-sm leading-6 text-muted-foreground sm:hidden">
-              We build high-performance drones in Kochi for industry, agriculture,
-              defence and commercial use.
+            <p className="mt-4 max-w-2xl text-sm leading-6 text-muted-foreground max-sm:text-center sm:mt-6">
+              From Kochi, we develop UAVs for mapping, surveillance and high-altitude logistics.
+              We also help teams model, simulate and manufacture parts and electronics.
             </p>
-            <div className="mt-6 hidden max-w-2xl space-y-3 text-sm leading-6 text-muted-foreground sm:block">
-              <p>
-                At Rovonize Systems, we are redefining the future of aerial technology
-                by manufacturing advanced, high-performance drones tailored for diverse
-                applications. Based in Kochi, Kerala, we are proud contributors to the
-                Make in India initiative, striving to position India as a global leader
-                in drone innovation.
-              </p>
-              <p>
-                Our expertise spans industrial, agricultural, defense, and commercial
-                drone solutions, offering cutting-edge technology with precision,
-                efficiency, and reliability. With a strong focus on research, innovation,
-                and sustainability, we are committed to delivering drones that empower
-                industries, enhance security, and drive economic growth.
-              </p>
-            </div>
             <div className="mt-7 flex flex-col flex-wrap gap-3 sm:flex-row">
               <ActionLink to="/products">Explore UAV Products</ActionLink>
               <ActionLink to="/engineering" variant="secondary">
@@ -149,11 +128,11 @@ export function HomePage() {
         </div>
       </section>
       <CredentialsSection />
-      <EngineeringServicesSection />
-      <MajorIndustriesSection />
-      <MissionSection />
       <ProductsSection />
-      <ResearchSection />
+      <EngineeringServicesSection />
+      <MissionSection />
+      <MajorIndustriesSection />
+      {/* <ResearchSection /> */}
       <AcademySection />
       <ContactBanner />
     </div>

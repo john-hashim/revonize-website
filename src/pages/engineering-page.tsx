@@ -12,7 +12,7 @@ export function EngineeringPage() {
         compact
         eyebrow="Engineering services"
         title="Engineering Services"
-        description="Bring your design from concept to production with 3D modelling and simulation, PCB development, carbon fibre moulding, and precision CNC machining."
+        description="Develop and test designs with ANSYS, then build parts and electronics through composite moulding, CNC machining, PCB assembly or industrial 3D printing. Explore our custom propeller design and test capabilities."
         visual={
           <AssetImage
             src={engineeringHero}
@@ -33,22 +33,22 @@ export function EngineeringPage() {
         </div>
       </PageIntro>
 
-      <section aria-labelledby="manufacturing-services-heading" className="bg-background py-12 sm:py-16">
+      <section aria-labelledby="engineering-services-heading" className="bg-background py-12 sm:py-16">
         <div className="container-shell">
           <h2
-            id="manufacturing-services-heading"
+            id="engineering-services-heading"
             className="mb-8 text-center text-3xl font-semibold tracking-tight sm:mb-10 sm:text-4xl"
           >
-            Choose a Manufacturing Service
+            Explore Engineering Services
           </h2>
-          <ul className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
-            {engineeringServices.map(({ id, title, description, preview }) => (
+          <ul className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+            {engineeringServices.map(({ id, title, summary, preview }) => (
               <CatalogCard
                 key={id}
                 id={id}
                 to={`/engineering/${id}`}
                 title={title}
-                description={description}
+                description={summary}
                 action="View service"
                 image={
                   <AssetImage

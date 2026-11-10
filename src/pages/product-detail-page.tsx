@@ -1,7 +1,8 @@
 import { AssetImage } from '@/components/common/asset-image'
 import { useParams } from 'react-router'
 import { ActionLink } from '@/components/common/action-link'
-import { PageIntro } from '@/components/common/page-intro'
+import { DetailIntro } from '@/components/common/detail-intro'
+import { TechnicalDetails } from '@/components/common/technical-details'
 import { products } from '@/data/products'
 import { NotFoundPage } from '@/pages/not-found-page'
 
@@ -13,46 +14,39 @@ export function ProductDetailPage() {
 
   return (
     <>
-      <PageIntro
-        compact
-        breadcrumbParent={{ label: 'UAV Products', to: '/products' }}
-        eyebrow={product.name}
+      <DetailIntro
+        parent={{ label: 'UAV Products', to: '/products' }}
+        category={product.application}
         title={product.name}
         description={product.description}
         visual={
           <AssetImage
             src={product.preview}
-            alt={`${product.name} ${product.format.toLowerCase()} UAV`}
+            alt={`Illustration of ${product.name}`}
             width={1024}
             height={1024}
             fetchPriority="high"
-            className="mx-auto aspect-[3/2] h-auto w-[85%] max-w-[29rem] object-cover"
+            className="mx-auto h-64 w-full max-w-[26rem] object-contain sm:h-80"
           />
         }
       >
-        <ActionLink to={`/contact?topic=spec-sheet&product=${product.slug}`} arrow={false}>
+        <ActionLink to={`/contact?topic=spec-sheet&product=${product.slug}`} className="min-h-11 px-4">
           Request {product.name} spec sheet
         </ActionLink>
-      </PageIntro>
+        <ActionLink to="#technical-details-heading" variant="secondary" arrow={false} className="min-h-11 px-4">
+          View specifications
+        </ActionLink>
+      </DetailIntro>
 
-      <section aria-labelledby="product-details-heading" className="bg-background py-12 sm:py-16">
-        <div className="container-shell">
-          <h2
-            id="product-details-heading"
-            className="mb-8 text-center text-3xl font-semibold tracking-tight sm:mb-10 sm:text-4xl"
-          >
-            Product Details
-          </h2>
-          <ul className="grid gap-5 md:grid-cols-3">
-            {product.details.map(({ title, description }) => (
-              <li key={title} className="rounded-md border bg-background p-5 sm:p-6">
-                <h3 className="text-lg font-semibold leading-snug tracking-tight">{title}</h3>
-                <p className="mt-2 text-sm leading-6 text-muted-foreground">{description}</p>
-              </li>
-            ))}
-          </ul>
-        </div>
-      </section>
+      <TechnicalDetails
+        title="Technical specifications"
+        columns={['Parameter', 'Specification']}
+        rows={product.specifications}
+        applicationsTitle="Mission applications"
+        applications={product.applications}
+        note="Request a spec sheet for the operating limits and payload options for your configuration."
+        action={{ to: `/contact?topic=spec-sheet&product=${product.slug}`, label: 'Discuss this platform', description: 'Tell us about your mission and payload requirements.' }}
+      />
     </>
   )
 }

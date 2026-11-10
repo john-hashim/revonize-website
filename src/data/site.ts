@@ -1,7 +1,7 @@
 export const navigation = [
   { label: 'UAV products', href: '/products' },
   { label: 'Engineering services', href: '/engineering' },
-  { label: 'R&D lab', href: '/research' },
+  // { label: 'R&D lab', href: '/research' },
   { label: 'Academy', href: '/academy' },
   { label: 'About', href: '/about' },
 ]

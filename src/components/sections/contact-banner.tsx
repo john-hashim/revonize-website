@@ -1,4 +1,5 @@
 import { ActionLink } from '@/components/common/action-link'
+import { requestQuote } from '@/data/site-navigation'
 
 export function ContactBanner() {
   return (
@@ -10,7 +11,7 @@ export function ContactBanner() {
             Have an engineering challenge in mind?
           </h2>
         </div>
-        <ActionLink to="/contact?topic=engineering" className="shrink-0">
+        <ActionLink to={requestQuote.href} className="shrink-0">
           Talk to our team
         </ActionLink>
       </div>

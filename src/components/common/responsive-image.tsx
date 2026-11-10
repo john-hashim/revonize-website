@@ -18,7 +18,7 @@ export function ResponsiveImage({
   return (
     <img
       src={full}
-      srcSet={`${small} 480w, ${full} 1024w`}
+      srcSet={small === full ? undefined : `${small} 480w, ${full} 1024w`}
       sizes={sizes}
       width={1024}
       height={1024}

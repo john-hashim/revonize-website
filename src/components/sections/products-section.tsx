@@ -1,158 +1,81 @@
 import { AssetImage } from '@/components/common/asset-image'
-import { useEffect, useRef, useState } from 'react'
-import { ArrowUpRight } from 'lucide-react'
-import { Link } from 'react-router'
+import { Check } from 'lucide-react'
+import { Tabs } from 'radix-ui'
+import { ActionLink } from '@/components/common/action-link'
 import { products } from '@/data/products'
-import './products-section.css'
-
-const visibleThreshold = 0.35
-const platformDescriptions: Record<string, string> = {
-  spectra: 'A compact quadrotor for reconnaissance and surveillance. Its four arms fold for transport and unfold for flight.',
-  veeksha: 'A fixed-wing UAV for observing an area of interest from the air. Its payload can be configured around the mission’s observation and sensor needs.',
-  ibex: 'A helicopter UAV for aerial observation and reconnaissance. Its airframe features a main rotor, tail boom and landing skids.',
-  stem: 'An open-frame quadrotor for classrooms and workshops. Learners can see how the motors, propellers and onboard electronics work together.',
-}
 
 export function ProductsSection() {
-  const [activeIndex, setActiveIndex] = useState(0)
-  const [progressRun, setProgressRun] = useState(0)
-  const [inView, setInView] = useState(false)
-  const showcaseRef = useRef<HTMLDivElement>(null)
-
-  useEffect(() => {
-    const showcase = showcaseRef.current
-    if (!showcase) return
-
-    let intersects = false
-
-    function updateVisibility() {
-      setInView(intersects && !document.hidden)
-    }
-
-    const observer = new IntersectionObserver(([entry]) => {
-      intersects = entry.intersectionRatio >= visibleThreshold
-      updateVisibility()
-    }, { threshold: visibleThreshold })
-
-    observer.observe(showcase)
-    document.addEventListener('visibilitychange', updateVisibility)
-
-    return () => {
-      observer.disconnect()
-      document.removeEventListener('visibilitychange', updateVisibility)
-    }
-  }, [])
-
   return (
     <section
       id="uav-platforms"
       aria-labelledby="uav-platforms-heading"
       className="bg-background py-8 sm:py-10 lg:py-12"
     >
-      <div
-        ref={showcaseRef}
-        data-in-view={inView}
-        className="uav-showcase container-shell grid items-center gap-5 md:grid-cols-[minmax(0,4fr)_minmax(0,5fr)] md:gap-8 lg:gap-12"
-      >
-        <div>
-          <h2
-            id="uav-platforms-heading"
-            className="text-3xl font-semibold leading-tight tracking-tight sm:text-4xl lg:text-[2.65rem]"
+      <div className="container-shell">
+        <h2
+          id="uav-platforms-heading"
+          className="text-center text-3xl font-semibold leading-tight tracking-tight sm:text-4xl lg:text-[2.65rem]"
+        >
+          UAV Platforms
+        </h2>
+        <p className="body-copy mx-auto mt-2 mb-3 max-w-2xl text-center sm:mb-4">
+          Explore aircraft for aerial surveys, surveillance and high-altitude cargo delivery.
+        </p>
+        <Tabs.Root defaultValue={products[0].slug}>
+          <Tabs.List
+            aria-labelledby="uav-platforms-heading"
+            className="grid grid-cols-2 border-b sm:grid-cols-4"
           >
-            UAV Platforms
-          </h2>
-          <p className="mt-2 mb-4 max-w-md text-base leading-6 font-medium text-muted-foreground sm:text-lg">
-            Aircraft for reconnaissance, surveillance and hands-on drone education.
-          </p>
-          <ol className="grid gap-1">
-            {products.map(({ slug, name, description }, index) => {
-              const active = index === activeIndex
-              const headingId = `uav-platform-${slug}`
-
-              return (
-                <li key={slug} className="relative pl-5 sm:pl-6">
-                  <span aria-hidden="true" className="absolute inset-y-0.5 left-0 w-0.5 bg-border/70">
-                    {active && (
-                      <span
-                        key={progressRun}
-                        className="uav-progress block h-full w-full origin-top bg-primary"
-                        onAnimationEnd={() => {
-                          setActiveIndex((current) =>
-                            current === index ? (current + 1) % products.length : current,
-                          )
-                        }}
-                      />
-                    )}
-                  </span>
-                  <h3>
-                    <button
-                      id={headingId}
-                      type="button"
-                      aria-expanded={active}
-                      aria-controls={`${headingId}-details`}
-                      onClick={() => {
-                        setActiveIndex(index)
-                        setProgressRun((run) => run + 1)
-                      }}
-                      className={`flex min-h-11 w-full items-center gap-3 rounded-sm text-left text-lg font-semibold tracking-tight transition-colors sm:gap-4 sm:text-xl ${active
-                        ? 'text-foreground'
-                        : 'text-muted-foreground hover:text-primary'}`}
-                    >
-                      <span
-                        aria-hidden="true"
-                        className={`text-sm font-semibold tabular-nums ${active ? 'text-primary' : ''}`}
-                      >
-                        {String(index + 1).padStart(2, '0')}
-                      </span>
-                      {name}
-                    </button>
-                  </h3>
-                  <div
-                    id={`${headingId}-details`}
-                    aria-hidden={!active}
-                    inert={!active}
-                    className={`grid motion-safe:transition-[grid-template-rows,opacity] motion-safe:duration-300 ${active
-                      ? 'grid-rows-[1fr] opacity-100'
-                      : 'grid-rows-[0fr] opacity-0'}`}
-                  >
-                    <div className="overflow-hidden">
-                      <p className="body-copy max-w-md">{platformDescriptions[slug] ?? description}</p>
-                      <Link
-                        to={`/products/${slug}`}
-                        className="inline-flex min-h-11 items-center gap-1.5 rounded-sm pr-1 text-sm font-semibold text-primary hover:underline focus-visible:-outline-offset-2"
-                      >
-                        Learn more<span className="sr-only"> about {name}</span>
-                        <ArrowUpRight aria-hidden="true" className="size-4" />
-                      </Link>
-                    </div>
-                  </div>
-                </li>
-              )
-            })}
-          </ol>
-        </div>
-        <figure className="relative aspect-[3/2] overflow-hidden rounded-md bg-secondary">
-          {products.map(({ slug, name, format, preview }, index) => {
-            const active = index === activeIndex
-
-            return (
-              <AssetImage
+            {products.map(({ slug, name }) => (
+              <Tabs.Trigger
                 key={slug}
-                src={preview}
-                sizes="(min-width: 1280px) 640px, (min-width: 768px) 55vw, calc(100vw - 40px)"
-                alt={active ? `${name} ${format.toLowerCase()} UAV` : ''}
-                aria-hidden={!active}
-                width={1024}
-                height={1024}
-                loading="lazy"
-                decoding="async"
-                className={`absolute inset-0 size-full object-cover p-[7%] motion-safe:transition-opacity motion-safe:duration-300 ${active
-                  ? 'opacity-100'
-                  : 'opacity-0'}`}
-              />
-            )
-          })}
-        </figure>
+                value={slug}
+                className="min-h-11 border-b-2 border-transparent px-2 py-2 text-sm font-semibold text-muted-foreground hover:text-foreground focus-visible:-outline-offset-4 data-[state=active]:border-primary data-[state=active]:text-primary sm:px-3"
+              >
+                {name}
+              </Tabs.Trigger>
+            ))}
+          </Tabs.List>
+          {products.map(({ slug, name, summary, applications, preview }) => (
+            <Tabs.Content
+              key={slug}
+              value={slug}
+              className="pt-[0.64rem] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary lg:pt-[0.8rem]"
+            >
+              <div className="grid items-start gap-4 sm:grid-cols-[minmax(0,1fr)_19.5rem] sm:gap-x-6 lg:grid-cols-[repeat(2,minmax(0,1fr))_19.5rem] lg:items-center lg:gap-x-8">
+                <div>
+                  <h3 className="text-xl font-semibold tracking-tight sm:text-2xl">{name}</h3>
+                  <p className="body-copy mt-2 text-sm/6">{summary}</p>
+                  <ActionLink
+                    to={`/products/${slug}`}
+                    variant="secondary"
+                    arrow={false}
+                    className="mt-3"
+                  >
+                    Learn more<span className="sr-only"> about {name}</span>
+                  </ActionLink>
+                </div>
+                <ul className="space-y-2">
+                  {applications.slice(0, 3).map((application) => (
+                    <li key={application} className="body-copy flex items-start gap-3 text-sm/6">
+                      <Check aria-hidden="true" className="mt-1 size-4 shrink-0 text-primary" />
+                      {application}
+                    </li>
+                  ))}
+                </ul>
+                <AssetImage
+                  src={preview}
+                  alt={`Illustration of ${name}`}
+                  width={1024}
+                  height={1024}
+                  sizes="(min-width: 640px) 312px, min(264px, calc(100vw - 40px))"
+                  loading="lazy"
+                  className="h-auto w-full max-w-66 justify-self-center sm:col-start-2 sm:row-span-2 sm:row-start-1 sm:max-w-none sm:self-center lg:col-auto lg:row-auto"
+                />
+              </div>
+            </Tabs.Content>
+          ))}
+        </Tabs.Root>
       </div>
     </section>
   )

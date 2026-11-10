@@ -13,6 +13,7 @@ npm run dev
 
 - `npm run dev` — development server with hot reload.
 - `npm run build` — TypeScript checks and production build in `dist/`.
+- `npm test` — intake validation and email-draft regression checks (Node 22.6+).
 - `npm run lint` — static analysis with Oxlint.
 - `npm run preview` — local preview of the production build.
 
@@ -44,13 +45,16 @@ Use `@/` for imports from `src/`. Keep editable content in `src/data/`, compose 
 | `/products`       | UAV platforms                           |
 | `/products/:slug` | Spectra, Veeksha, IBEX and STEM details |
 | `/engineering`    | Capabilities and engineering workflow   |
-| `/research`       | R&D and Project AeroWeave               |
-| `/academy`        | Internships, diploma and course FAQs    |
+| `/engineering/:serviceId` | Six engineering service detail pages |
+| `/consult-engineering` | Engineering and prototyping quote request |
+| `/academy`        | Aerospace Academy application            |
 | `/about`          | Company and leadership                  |
 | `/contact`        | Contact details and email enquiry draft |
 | Unmatched paths   | Not-found page                          |
 
-Contact links can preselect `topic`, `product` and `course` through query parameters. The contact form uses `mailto:` to open an email draft in the visitor’s email application; it has no backend and does not send or store submissions. It explicitly describes that behaviour to visitors.
+Contact links can preselect `topic`, `product` and `course` through query parameters. The contact, engineering quote request and academy application forms use `mailto:` to open an email draft in the visitor’s email application. They have no backend and do not send or store submissions. The previous `/request-quote` URL redirects to `/consult-engineering`.
+
+Engineering detail pages link to `/consult-engineering?service=<serviceId>` to preselect the relevant services. Unknown service IDs fall back to an unselected enquiry. The legacy quote redirect preserves query parameters. Both intake forms validate required fields, checkbox groups and web links, then show a reviewable draft with copy and text-download fallbacks for email clients that cannot open or retain long `mailto:` messages. Changing a field clears the prepared draft so it cannot be sent with stale details.
 
 ## UI and styling
 
@@ -58,8 +62,8 @@ Contact links can preselect `topic`, `product` and `course` through query parame
 - Theme colours, spacing helpers and shared typography are in `src/index.css`.
 - [shadcn/ui](https://ui.shadcn.com/docs/installation/vite) components are checked into `src/components/ui/`; `components.json` configures the CLI.
 - Add components with `npx shadcn@latest add <component>` and keep utility imports pointing to `@/lib/utils`.
-- Mobile navigation uses a shadcn Sheet; forms, badges, buttons and academy FAQs use shared shadcn components.
-- Product performance figures, certifications, fees and intake dates are omitted pending final content.
+- Mobile navigation uses a shadcn Sheet; forms, badges and buttons use shared shadcn components.
+- Product specifications and engineering capabilities live in `src/data/products.ts` and `src/data/capabilities.ts`. Academy fees and intake dates are not published.
 
 ## Replacing site images
 

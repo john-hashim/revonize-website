@@ -17,26 +17,27 @@ export const products = [
     name: 'Spectra',
     image: { full: spectraImage, small: spectraSmallImage },
     preview: spectraPreview,
-    format: 'Foldable quad',
-    application: 'Reconnaissance',
+    format: 'Survey multirotor',
+    application: 'Multispectral mapping',
+    summary: 'A multispectral survey UAV for mapping terrain, assessing vegetation and measuring stockpile volumes.',
     description:
-      'A foldable quadrotor platform for reconnaissance and surveillance applications.',
-    details: [
-      {
-        title: 'Foldable quadrotor',
-        description:
-          'The four arms fold for transport and open into the flight position for deployment.',
-      },
-      {
-        title: 'Aerial observation',
-        description:
-          'Designed for reconnaissance and surveillance where a compact quadrotor suits the task.',
-      },
-      {
-        title: 'Mission integration',
-        description:
-          'Discuss the observation task and payload requirements with Rovonize to identify a suitable configuration.',
-      },
+      'Spectra captures aerial imagery for orthomosaics, vegetation health mapping and volumetric surveys. A stabilised three-axis gimbal supports interchangeable RGB and multispectral survey payloads.',
+    specifications: [
+      { label: 'Configuration', value: 'Quadrotor or hexarotor' },
+      { label: 'Maximum take-off weight (MTOW)', value: '6.8 kg' },
+      { label: 'Payload capacity', value: '1.8 kg in the standard payload bay' },
+      { label: 'Flight endurance', value: '50–58 min with payload active' },
+      { label: 'Survey coverage', value: '1.5 km² per flight at 120 m above ground level (AGL)' },
+      { label: 'Ground sampling distance', value: '1.2 cm/pixel for RGB imagery at 100 m. 4.5 cm/pixel for multispectral imagery.' },
+      { label: 'Imaging payload', value: '45 MP full-frame photogrammetry sensor and a five-band multispectral imager (blue, green, red, red edge and near infrared) with a downwelling light sensor.' },
+      { label: 'Positioning', value: 'Multi-constellation RTK/PPK GNSS with specified horizontal accuracy under 2 cm.' },
+      { label: 'Telemetry link', value: 'Encrypted 2.4 GHz and 5.8 GHz point-to-point link, up to 12 km with line of sight.' },
+    ],
+    applications: [
+      'Orthomosaic mapping and topographic surveys',
+      'Vegetation health mapping using NDVI',
+      'Mining and stockpile volume surveys',
+      'Infrastructure corridor inspection',
     ],
   },
   {
@@ -44,80 +45,82 @@ export const products = [
     name: 'Veeksha',
     image: { full: veekshaImage, small: veekshaSmallImage },
     preview: veekshaPreview,
-    format: 'Fixed-wing',
-    application: 'Reconnaissance',
+    format: 'Surveillance UAV',
+    application: 'Day and night surveillance',
+    summary: 'A day and night surveillance UAV with zoom and thermal imaging for perimeter patrol and search and rescue.',
     description:
-      'A fixed-wing UAV platform for aerial reconnaissance and surveillance missions.',
-    details: [
-      {
-        title: 'Fixed-wing airframe',
-        description:
-          'A fixed-wing UAV designed for reconnaissance and surveillance over an area of interest.',
-      },
-      {
-        title: 'Reconnaissance and surveillance',
-        description:
-          'Intended for aerial observation where the mission calls for a fixed-wing platform.',
-      },
-      {
-        title: 'Payload configuration',
-        description:
-          'Share your observation and sensor requirements so the team can advise on the appropriate configuration.',
-      },
+      'Veeksha is designed for rapid deployment on border, maritime and search-and-rescue missions. It combines daylight and thermal imaging with onboard processing that can classify people and vehicles and track their positions.',
+    specifications: [
+      { label: 'Maximum take-off weight (MTOW)', value: '9.2 kg' },
+      { label: 'Flight endurance', value: '65–75 min of continuous station-keeping' },
+      { label: 'Secure datalink range', value: '20 km' },
+      { label: 'Maximum operating altitude', value: '3,500 m above mean sea level (AMSL)' },
+      { label: 'Daylight optics', value: 'Electro-optical sensor with 30× optical zoom' },
+      { label: 'Thermal imaging', value: '640 × 512 cooled long-wave infrared (LWIR) imager' },
+      { label: 'Laser rangefinder', value: 'Integrated eye-safe rangefinder, up to 2,500 m' },
+      { label: 'Onboard processing', value: 'Low-latency classification and tracking of people and vehicles' },
+      { label: 'Communications', value: 'AES-256 encrypted command and control and video downlink, with mesh network integration' },
+      { label: 'Noise reduction', value: 'Low-noise propeller profiles' },
+    ],
+    applications: [
+      'Border and perimeter monitoring',
+      'Maritime patrol',
+      'Day and night aerial reconnaissance',
+      'Disaster response and search and rescue',
     ],
   },
   {
     slug: 'ibex',
-    name: 'IBEX',
+    name: 'Ibex',
     image: { full: ibexImage, small: ibexSmallImage },
     preview: ibexPreview,
-    format: 'Helicopter',
-    application: 'Reconnaissance',
+    format: 'Coaxial heavy-lift UAV',
+    application: 'High-altitude logistics',
+    summary: 'An autonomous heavy-lift UAV for high-altitude resupply and medical deliveries.',
     description:
-      'A helicopter UAV platform developed around reconnaissance applications.',
-    details: [
-      {
-        title: 'Helicopter airframe',
-        description:
-          'A rotary-wing UAV built around a helicopter layout, with a main rotor, tail boom and landing skids in the illustrated configuration.',
-      },
-      {
-        title: 'Reconnaissance role',
-        description:
-          'Designed for aerial observation and reconnaissance missions that call for a helicopter UAV.',
-      },
-      {
-        title: 'System integration',
-        description:
-          'Discuss mission requirements and observation equipment with the team to determine the right configuration.',
-      },
+      'Ibex delivers supplies to high-altitude sites that are difficult to reach by ground. It uses a coaxial electric powertrain with brushless motors and vacuum-infused carbon fibre trusses. Cargo can be released after landing or lowered by winch from a hover.',
+    specifications: [
+      { label: 'Maximum take-off weight (MTOW)', value: '48.0 kg' },
+      { label: 'Payload capacity', value: '12–15 kg via quick-release cargo bay or tethered winch' },
+      { label: 'Take-off and operating ceiling', value: '4,500+ m above mean sea level (AMSL)' },
+      { label: 'Mission radius', value: '25 km for a round-trip mission with full payload drop' },
+      { label: 'Wind resistance limit', value: '18 m/s' },
+      { label: 'Operating temperature', value: '−20 °C to +50 °C, with a self-heating battery enclosure' },
+      { label: 'Cargo delivery', value: 'Automated touchdown release or tethered hoist release without landing' },
+      { label: 'Flight redundancy', value: 'Triple-redundant inertial measurement units (IMUs), dual compasses, dual GNSS and a ballistic recovery parachute' },
+    ],
+    applications: [
+      'High-altitude cargo delivery and forward-base resupply',
+      'Medical supply drops in remote terrain',
+      'Logistics where ground routes are inaccessible',
     ],
   },
   {
     slug: 'stem',
-    name: 'STEM',
+    name: 'ROV-STEM',
     image: { full: stemImage, small: stemSmallImage },
     preview: stemPreview,
     format: 'Quadrotor',
-    application: 'Education',
+    application: 'Surveillance & perimeter scans',
+    summary: 'A compact quadrotor for aerial surveillance, perimeter scans and object tracking.',
     description:
-      'A quadrotor platform for exploring drone technology through practical learning.',
-    details: [
-      {
-        title: 'Hands-on drone education',
-        description:
-          'A practical platform for exploring how a quadrotor is built and how its major components work together.',
-      },
-      {
-        title: 'Flight-system fundamentals',
-        description:
-          'Use the open-frame design to see the motors, propellers and onboard electronics that make up a quadrotor.',
-      },
-      {
-        title: 'Classroom and workshop use',
-        description:
-          'Designed to support practical learning in drone technology, with the activities tailored to the learners and setting.',
-      },
+      'ROV-STEM is a compact surveillance quadrotor for perimeter scanning, aerial mapping and object tracking. It can support law enforcement teams that need an overhead view of an area.',
+    specifications: [
+      { label: 'Configuration', value: 'Quadrotor' },
+      { label: 'Airframe', value: 'Carbon fibre' },
+      { label: 'Propulsion', value: 'Electric motors' },
+      { label: 'Maximum take-off weight (MTOW)', value: '1.3 kg' },
+      { label: 'Empty weight', value: '750 g' },
+      { label: 'Cruise speed', value: '18 m/s' },
+      { label: 'Maximum speed', value: '100 km/h' },
+      { label: 'Operational range', value: '5 km' },
+      { label: 'Flight endurance', value: '18 min' },
+    ],
+    applications: [
+      'Perimeter scanning and surveillance',
+      'Object tracking',
+      'Aerial mapping',
+      'Law enforcement support',
     ],
   },
 ]

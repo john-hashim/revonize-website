@@ -1,10 +1,10 @@
 import { capabilities } from '@/data/capabilities'
 import { products } from '@/data/products'
-import { aeroWeaveImage } from '@/data/research'
+// import { aeroWeaveImage } from '@/data/research'
 import { navigation } from '@/data/site'
 
 export const headerNavigation = [...navigation, { label: 'Careers', href: '/careers' }]
-export const requestQuote = { label: 'Request quote', href: '/request-quote' }
+export const requestQuote = { label: 'Consult Engineering', href: '/consult-engineering' }
 
 export type NavigationCard = {
   label: string
@@ -31,14 +31,14 @@ export const navigationCards: Partial<Record<string, NavigationCard[]>> = {
         }]
       : [],
   ),
-  '/research': [{
-    label: 'Aerospace composite research',
-    subtitle: 'Project AeroWeave',
-    description:
-      'AeroWeave explores out-of-autoclave carbon prepreg and fabrication methods for lightweight aerospace structures. The project connects materials research and structural simulation with hands-on composite fabrication.',
-    href: '/research/aeroweave',
-    image: aeroWeaveImage,
-  }],
+  // '/research': [{
+  //   label: 'Aerospace composite research',
+  //   subtitle: 'Project AeroWeave',
+  //   description:
+  //     'AeroWeave explores out-of-autoclave carbon prepreg and fabrication methods for lightweight aerospace structures. The project connects materials research and structural simulation with hands-on composite fabrication.',
+  //   href: '/research/aeroweave',
+  //   image: aeroWeaveImage,
+  // }],
 }
 
 export const headerPages = [

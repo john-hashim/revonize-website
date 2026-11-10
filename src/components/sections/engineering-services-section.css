@@ -1,0 +1,23 @@
+@media (prefers-reduced-motion: no-preference) {
+  .engineering-progress {
+    animation: engineering-progress-fill 7s linear both paused;
+  }
+
+  .engineering-showcase[data-in-view='true'] .engineering-progress {
+    animation-play-state: running;
+  }
+
+  .engineering-showcase:has(:focus-visible) .engineering-progress {
+    animation-play-state: paused;
+  }
+}
+
+@keyframes engineering-progress-fill {
+  from {
+    transform: scaleY(0);
+  }
+
+  to {
+    transform: scaleY(1);
+  }
+}

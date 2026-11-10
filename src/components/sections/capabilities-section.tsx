@@ -35,7 +35,7 @@ export function CapabilitiesSection() {
                   </p>
                   <h3 className="text-xl font-semibold tracking-tight sm:text-2xl">
                     <Link
-                      to={index === 4 ? '/academy' : `/engineering/${item.id}`}
+                      to={item.id === 'technical-education' ? '/academy' : `/engineering/${item.id}`}
                       className="inline-flex items-start gap-2 hover:text-primary"
                     >
                       {item.title}
@@ -58,7 +58,7 @@ export function CapabilitiesSection() {
                     />
                   )}
                 </div>
-                {index === 4 && (
+                {item.id === 'technical-education' && (
                   <ul className="mt-3 space-y-2 text-sm leading-6 text-muted-foreground">
                     <li>
                       3- and 6-month internships in UAV Design & Development

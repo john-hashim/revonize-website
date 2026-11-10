@@ -1,7 +1,7 @@
-import { createBrowserRouter } from 'react-router'
+import { createBrowserRouter, redirect } from 'react-router'
 import { RouteError } from '@/app/route-error'
 import { SiteLayout } from '@/app/site-layout'
-import { headerPages } from '@/data/site-navigation'
+import { headerPages, requestQuote } from '@/data/site-navigation'
 import { HomePage } from '@/pages/home-page'
 
 export const router = createBrowserRouter([
@@ -17,7 +17,8 @@ export const router = createBrowserRouter([
       { index: true, element: <HomePage /> },
       ...headerPages
         .filter(({ href }) =>
-          href !== '/about' && !/^\/(engineering|products)(\/|$)/.test(href),
+          !['/about', '/academy', requestQuote.href].includes(href) &&
+          !/^\/(engineering|products)(\/|$)/.test(href),
         )
         .map(({ href, label }) => ({
           path: href,
@@ -49,6 +50,22 @@ export const router = createBrowserRouter([
         path: 'engineering/:serviceId',
         lazy: async () => ({
           Component: (await import('@/pages/engineering-service-page')).EngineeringServicePage,
+        }),
+      },
+      {
+        path: requestQuote.href,
+        lazy: async () => ({
+          Component: (await import('@/pages/consult-engineering-page')).ConsultEngineeringPage,
+        }),
+      },
+      {
+        path: 'request-quote',
+        loader: ({ request }) => redirect(`${requestQuote.href}${new URL(request.url).search}`),
+      },
+      {
+        path: 'academy',
+        lazy: async () => ({
+          Component: (await import('@/pages/academy-page')).AcademyPage,
         }),
       },
       {

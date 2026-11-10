@@ -1,7 +1,9 @@
 import { useParams } from 'react-router'
 import { ActionLink } from '@/components/common/action-link'
-import { PageIntro } from '@/components/common/page-intro'
+import { DetailIntro } from '@/components/common/detail-intro'
+import { TechnicalDetails } from '@/components/common/technical-details'
 import { engineeringServices } from '@/data/capabilities'
+import { requestQuote } from '@/data/site-navigation'
 import { NotFoundPage } from '@/pages/not-found-page'
 
 export function EngineeringServicePage() {
@@ -9,13 +11,13 @@ export function EngineeringServicePage() {
   const service = engineeringServices.find(({ id }) => id === serviceId)
 
   if (!service) return <NotFoundPage />
+  const enquiryUrl = `${requestQuote.href}?service=${service.id}`
 
   return (
     <>
-      <PageIntro
-        compact
-        breadcrumbParent={{ label: 'Engineering Services', to: '/engineering' }}
-        eyebrow={service.title}
+      <DetailIntro
+        parent={{ label: 'Engineering Services', to: '/engineering' }}
+        category={service.category}
         title={service.title}
         description={service.description}
         visual={
@@ -24,33 +26,26 @@ export function EngineeringServicePage() {
             width={576}
             height={384}
             fetchPriority="high"
-            className="mx-auto h-auto w-[85%] max-w-[29rem]"
+            className="mx-auto aspect-[3/2] h-auto w-full max-w-[29rem] object-contain"
           />
         }
       >
-        <ActionLink to="/contact?topic=engineering" arrow={false}>
+        <ActionLink to={enquiryUrl} className="min-h-11 px-4">
           Discuss your project
         </ActionLink>
-      </PageIntro>
+        <ActionLink to="#technical-details-heading" variant="secondary" arrow={false} className="min-h-11 px-4">
+          Explore capabilities
+        </ActionLink>
+      </DetailIntro>
 
-      <section aria-labelledby="service-details-heading" className="bg-background py-12 sm:py-16">
-        <div className="container-shell">
-          <h2
-            id="service-details-heading"
-            className="mb-8 text-center text-3xl font-semibold tracking-tight sm:mb-10 sm:text-4xl"
-          >
-            Service Details
-          </h2>
-          <ul className="grid gap-5 md:grid-cols-3">
-            {service.highlights.map(({ title, description }) => (
-              <li key={title} className="rounded-md border bg-background p-5 sm:p-6">
-                <h3 className="text-lg font-semibold leading-snug tracking-tight">{title}</h3>
-                <p className="mt-2 text-sm leading-6 text-muted-foreground">{description}</p>
-              </li>
-            ))}
-          </ul>
-        </div>
-      </section>
+      <TechnicalDetails
+        title="Technical capabilities"
+        columns={['Capability', 'Scope of work']}
+        rows={service.technicalCapabilities}
+        applicationsTitle="Typical applications"
+        applications={service.applications}
+        action={{ to: enquiryUrl, label: 'Discuss your project', description: 'Share your drawings, materials and project requirements for review.' }}
+      />
     </>
   )
 }
