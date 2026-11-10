@@ -13,7 +13,7 @@ npm run dev
 
 - `npm run dev` — development server with hot reload.
 - `npm run build` — TypeScript checks and production build in `dist/`.
-- `npm test` — intake validation and email-draft regression checks (Node 22.6+).
+- `npm test` — intake form validation checks (Node 22.6+).
 - `npm run lint` — static analysis with Oxlint.
 - `npm run preview` — local preview of the production build.
 
@@ -49,12 +49,14 @@ Use `@/` for imports from `src/`. Keep editable content in `src/data/`, compose 
 | `/consult-engineering` | Engineering and prototyping quote request |
 | `/academy`        | Aerospace Academy application            |
 | `/about`          | Company and leadership                  |
-| `/contact`        | Contact details and email enquiry draft |
+| `/contact`        | General contact enquiry                 |
 | Unmatched paths   | Not-found page                          |
 
-Contact links can preselect `topic`, `product` and `course` through query parameters. The contact, engineering quote request and academy application forms use `mailto:` to open an email draft in the visitor’s email application. They have no backend and do not send or store submissions. The previous `/request-quote` URL redirects to `/consult-engineering`.
+Contact links can preselect a topic and prefill the message for a product or course through query parameters. The previous `/request-quote` URL redirects to `/consult-engineering`.
 
-Engineering detail pages link to `/consult-engineering?service=<serviceId>` to preselect the relevant services. Unknown service IDs fall back to an unselected enquiry. The legacy quote redirect preserves query parameters. Both intake forms validate required fields, checkbox groups and web links, then show a reviewable draft with copy and text-download fallbacks for email clients that cannot open or retain long `mailto:` messages. Changing a field clears the prepared draft so it cannot be sent with stale details.
+Engineering detail pages link to `/consult-engineering?service=<serviceId>` to preselect the relevant services. Unknown service IDs fall back to an unselected enquiry. The legacy quote redirect preserves query parameters.
+
+The academy application, engineering enquiry and contact forms submit to their respective Formspree endpoints. Each form shows a confirmation after Formspree accepts the submission and keeps the entered values available for retry if sending fails.
 
 ## UI and styling
 

@@ -110,6 +110,11 @@
   html {
     scroll-padding-top: 7rem;
   }
+  @media (prefers-reduced-motion: no-preference) {
+    html:has([data-smooth-form-sections]) {
+      scroll-behavior: smooth;
+    }
+  }
   h1,
   h2,
   h3 {

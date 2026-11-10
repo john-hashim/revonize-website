@@ -14,8 +14,9 @@ export function ConsultEngineeringPage() {
       title="Consult Engineering"
       description="Request a quote for engineering and prototyping services. Tell us what you’re building and the specifications we’ll need to review it."
       sections={engineeringForm}
+      endpoint="https://formspree.io/f/mrppnkvo"
       subject="Engineering & Prototyping Services RFQ"
-      reviewLabel="Review project enquiry"
+      kind="enquiry"
       defaults={selected ? { services_required: selected } : undefined}
       context={service?.title}
     />

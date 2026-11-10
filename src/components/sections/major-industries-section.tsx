@@ -1,5 +1,4 @@
 import { AssetImage } from '@/components/common/asset-image'
-import { ArrowUpRight } from 'lucide-react'
 import { Link } from 'react-router'
 import { industries } from '@/data/industries'
 
@@ -23,7 +22,7 @@ export function MajorIndustriesSection() {
           </p>
         </div>
         <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
-          {industries.map(({ title, image, description, learnMore, related }) => (
+          {industries.map(({ title, image, description, related }) => (
             <article key={title} className="flex flex-col overflow-hidden rounded-md bg-muted">
               <AssetImage
                 {...image}
@@ -34,26 +33,17 @@ export function MajorIndustriesSection() {
                 decoding="async"
                 className="aspect-video w-full object-cover"
               />
-              <div className="flex grow flex-col px-5 pt-5 pb-3 sm:px-6">
+              <div className="flex grow flex-col px-5 py-5 sm:px-6">
                 <h3 className="text-lg font-semibold leading-snug tracking-tight">{title}</h3>
                 <p className="mt-2 grow text-sm leading-6 text-muted-foreground">{description}</p>
-                <div className="mt-3 flex flex-wrap items-center gap-x-4">
+                {related && (
                   <Link
-                    to={learnMore.to}
-                    className="inline-flex min-h-11 items-center gap-1.5 text-sm font-semibold text-primary hover:underline"
+                    to={related.to}
+                    className="mt-3 inline-flex min-h-11 items-center self-start text-sm font-medium text-primary hover:underline"
                   >
-                    Learn more<span className="sr-only"> about {title} from {learnMore.label}</span>
-                    <ArrowUpRight aria-hidden="true" className="size-4" />
+                    {related.label}
                   </Link>
-                  {related && (
-                    <Link
-                      to={related.to}
-                      className="inline-flex min-h-11 items-center text-sm font-medium text-primary hover:underline"
-                    >
-                      {related.label}
-                    </Link>
-                  )}
-                </div>
+                )}
               </div>
             </article>
           ))}
