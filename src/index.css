@@ -111,7 +111,7 @@
     scroll-padding-top: 7rem;
   }
   @media (prefers-reduced-motion: no-preference) {
-    html:has([data-smooth-form-sections]) {
+    html:has([data-smooth-section-scroll]) {
       scroll-behavior: smooth;
     }
   }

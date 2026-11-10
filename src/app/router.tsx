@@ -17,7 +17,7 @@ export const router = createBrowserRouter([
       { index: true, element: <HomePage /> },
       ...headerPages
         .filter(({ href }) =>
-          !['/about', '/academy', requestQuote.href].includes(href) &&
+          !['/about', '/academy', '/careers', requestQuote.href].includes(href) &&
           !/^\/(engineering|products)(\/|$)/.test(href),
         )
         .map(({ href, label }) => ({
@@ -72,6 +72,12 @@ export const router = createBrowserRouter([
         path: 'about',
         lazy: async () => ({
           Component: (await import('@/pages/about-page')).AboutPage,
+        }),
+      },
+      {
+        path: 'careers',
+        lazy: async () => ({
+          Component: (await import('@/pages/careers-page')).CareersPage,
         }),
       },
       {

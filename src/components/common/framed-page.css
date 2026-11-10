@@ -1,0 +1,83 @@
+.framed-page {
+  --frame-line: color-mix(in srgb, var(--border) 65%, var(--background));
+  --frame-cube-top: color-mix(in srgb, var(--border) 18%, var(--background));
+}
+
+.framed-intro {
+  --frame-gap: clamp(1.5rem, 2.5vw, 2.25rem);
+  border-block-end: 1px solid var(--frame-line);
+  overflow: clip;
+  padding-block: var(--frame-gap);
+  position: relative;
+}
+
+.framed-intro-panel {
+  border: 1px solid var(--frame-line);
+}
+
+.framed-intro-panel::before,
+.framed-intro-panel::after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  height: var(--frame-gap);
+  border-left: 1px solid var(--frame-line);
+}
+
+.framed-intro-panel::before {
+  top: 0;
+}
+
+.framed-intro-panel::after {
+  bottom: 0;
+}
+
+.framed-intro::before,
+.framed-intro::after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  width: 1rem;
+  height: 1rem;
+  border: 1px solid var(--frame-line);
+  background: var(--background);
+  transform: translateX(-50%) rotate(45deg);
+  z-index: 1;
+}
+
+.framed-intro::before {
+  top: -0.5rem;
+}
+
+.framed-intro::after {
+  bottom: -0.5rem;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  [data-text-reveal='pending'] :is(h1, h2, h3) {
+    opacity: 0;
+  }
+
+  [data-text-reveal='visible'] :is(h1, h2, h3) {
+    animation: framed-text-appear 850ms cubic-bezier(0.25, 0.55, 0.3, 1);
+  }
+
+  .framed-page a:focus-visible [data-text-reveal] h3 {
+    animation: none;
+    opacity: 1;
+  }
+}
+
+@keyframes framed-text-appear {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+    filter: blur(6px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+    filter: blur(0);
+  }
+}

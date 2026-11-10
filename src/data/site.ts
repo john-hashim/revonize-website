@@ -18,7 +18,7 @@ export const company = {
   address:
     'Rovonize Aerospace Research Centre, Memury, Pampakuda, Kerala 686667',
   socialLinks: [
-    { label: 'LinkedIn', icon: 'linkedin', href: 'https://www.linkedin.com/company/rovonize-systems/' },
+    { label: 'LinkedIn', icon: 'linkedin', href: 'https://www.linkedin.com/company/rovonize-systems' },
     { label: 'Instagram', icon: 'instagram', href: 'https://www.instagram.com/rovonize.s/' },
     { label: 'Facebook', icon: 'facebook', href: 'https://www.facebook.com/Rovonize/' },
     { label: 'YouTube', icon: 'youtube', href: 'https://www.youtube.com/@rovonizesystems8190/videos' },

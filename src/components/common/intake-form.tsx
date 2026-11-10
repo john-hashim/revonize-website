@@ -238,7 +238,7 @@ export function IntakeForm({ sections, endpoint, subject, title, description, ey
             }}>{copy.restartLabel} <ArrowRight aria-hidden="true" /></Button>
           </section>
         ) : (
-          <form aria-label={subject} action={endpoint} method="post" data-smooth-form-sections noValidate onSubmit={handleSubmit}
+          <form aria-label={subject} action={endpoint} method="post" data-smooth-section-scroll noValidate onSubmit={handleSubmit}
             onChange={(event) => {
               const input = event.target
               if (!(input instanceof HTMLInputElement || input instanceof HTMLSelectElement || input instanceof HTMLTextAreaElement)) return

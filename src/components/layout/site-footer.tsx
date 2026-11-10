@@ -8,7 +8,7 @@ const copyrightYear = new Date().getFullYear()
 
 export function SiteFooter() {
   return (
-    <footer className="border-t bg-background text-foreground">
+    <footer className="site-footer border-t bg-background text-foreground">
       <div className="container-shell grid gap-10 py-14 sm:grid-cols-2 lg:grid-cols-[1.3fr_0.8fr_0.8fr_1.25fr] lg:gap-12 lg:py-20">
         <div>
           <Link to="/" className="text-2xl font-extrabold tracking-[-0.06em]">
@@ -19,6 +19,8 @@ export function SiteFooter() {
               <li key={icon}>
                 <a
                   href={href}
+                  target={icon === 'linkedin' ? '_blank' : undefined}
+                  rel={icon === 'linkedin' ? 'noopener' : undefined}
                   aria-label={`Rovonize on ${label}`}
                   className="grid size-11 place-items-center rounded-md text-muted-foreground transition-colors hover:bg-muted hover:text-foreground focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-foreground"
                 >
@@ -45,7 +47,7 @@ export function SiteFooter() {
             {products.map((product) => (
               <li key={product.slug}>
                 <Link
-                  className="transition-colors hover:text-primary-hover"
+                  className="transition-colors hover:text-foreground"
                   to={`/products/${product.slug}`}
                 >
                   {product.name}
@@ -62,7 +64,7 @@ export function SiteFooter() {
             {navigation.slice(1).map((item) => (
               <li key={item.href}>
                 <Link
-                  className="transition-colors hover:text-primary-hover"
+                  className="transition-colors hover:text-foreground"
                   to={item.href}
                 >
                   {item.label}
@@ -70,7 +72,7 @@ export function SiteFooter() {
               </li>
             ))}
             <li>
-              <Link to="/contact" className="hover:text-primary-hover">
+              <Link to="/contact" className="transition-colors hover:text-foreground">
                 Contact
               </Link>
             </li>
@@ -92,7 +94,7 @@ export function SiteFooter() {
             <div>
               {company.phones.map((phone) => (
                 <a
-                  className="block w-fit py-1 hover:text-primary-hover"
+                  className="block w-fit py-1 transition-colors hover:text-foreground"
                   key={phone.href}
                   href={phone.href}
                 >
@@ -109,7 +111,7 @@ export function SiteFooter() {
           </address>
         </div>
       </div>
-      <div className="border-t">
+      <div className="border-t bg-black/15">
         <div className="container-shell flex flex-col justify-between gap-3 py-5 text-xs text-muted-foreground sm:flex-row">
           <p>
             © {copyrightYear} {company.name}. All rights reserved.
