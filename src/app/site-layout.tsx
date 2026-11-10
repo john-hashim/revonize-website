@@ -2,8 +2,10 @@ import { Outlet, useNavigation } from 'react-router'
 import { SiteHeader } from '@/components/layout/site-header'
 import { SiteFooter } from '@/components/layout/site-footer'
 import { RouteEffects } from '@/app/route-effects'
+import { useInitialLoader } from '@/app/use-initial-loader'
 
 export function SiteLayout() {
+  useInitialLoader()
   const navigation = useNavigation()
 
   return (
