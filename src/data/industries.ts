@@ -9,7 +9,6 @@ export const industries = [
     image: { src: defenceImage, alt: 'Reconnaissance UAV flying over a mountain valley' },
     description:
       'UAVs for reconnaissance, surveillance and border monitoring, plus Ibex for high-altitude cargo delivery.',
-    related: { label: 'Veeksha', to: '/products/veeksha' },
   },
   {
     title: 'Agriculture',
@@ -28,6 +27,5 @@ export const industries = [
     image: { src: logisticsImage, alt: 'Cargo UAV carrying a supply crate near a rocky coastline' },
     description:
       'Intended uses include cargo delivery for remote or offshore operations, disaster relief, and search and rescue.',
-    related: { label: 'EAGLE PRO', to: 'https://rovonize.com/products/eagle-pro/' },
   },
 ]

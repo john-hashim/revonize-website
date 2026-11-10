@@ -68,12 +68,12 @@ export function HomePage() {
       <section className="bg-muted">
         <div className="container-shell grid items-center gap-9 py-12 sm:py-16 lg:grid-cols-[minmax(0,3fr)_minmax(0,2fr)] lg:gap-12 lg:py-20 xl:gap-16">
           <div>
-            <h1 className="text-[clamp(2rem,10vw,2.75rem)] font-semibold leading-[1.08] tracking-[-0.045em] max-sm:text-center sm:text-[clamp(2.75rem,5.4vw,3.75rem)] lg:text-[clamp(2.75rem,4.2vw,3.75rem)]">
+            <h1 className="text-[min(2.75rem,8vw)] font-semibold leading-[1.08] tracking-[-0.045em] max-sm:text-center max-sm:whitespace-nowrap sm:text-[clamp(2.75rem,5.4vw,3.75rem)] lg:text-[clamp(2.75rem,4.2vw,3.75rem)]">
               <span className="sr-only">
                 We design and build UAVs, composite structures, custom electronics
                 and precision components.
               </span>
-              <span aria-hidden="true" className="block max-sm:text-balance">
+              <span aria-hidden="true" className="block">
                 We design and build
               </span>
               <span aria-hidden="true" className="grid overflow-hidden text-primary">
