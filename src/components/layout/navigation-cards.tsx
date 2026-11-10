@@ -14,7 +14,10 @@ export function NavigationCards({
   onCardKeyDown?: (event: KeyboardEvent<HTMLAnchorElement>, index: number) => void
 }) {
   return (
-    <ul className="grid grid-cols-2 gap-3 pb-4 xl:grid-cols-4 xl:gap-6 xl:py-6">
+    <ul className={cn(
+      'grid grid-cols-2 gap-3 pb-4 xl:gap-6 xl:py-6',
+      cards.length === 5 ? 'xl:grid-cols-5' : 'xl:grid-cols-4',
+    )}>
       {cards.map((card, index) => (
         <li
           key={card.href}

@@ -44,7 +44,7 @@ export function ProductDetailPage() {
         rows={product.specifications}
         applicationsTitle="Mission applications"
         applications={product.applications}
-        note="Request a spec sheet for the operating limits and payload options for your configuration."
+        note={product.specificationsNote ?? 'Request a spec sheet for the operating limits and payload options for your configuration.'}
         action={{ to: `/contact?topic=spec-sheet&product=${product.slug}`, label: 'Discuss this platform', description: 'Tell us about your mission and payload requirements.' }}
       />
     </>

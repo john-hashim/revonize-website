@@ -19,18 +19,18 @@ export function ProductsSection() {
           UAV Platforms
         </h2>
         <p className="body-copy mx-auto mt-2 mb-3 max-w-2xl text-center sm:mb-4">
-          Explore aircraft for aerial surveys, surveillance and high-altitude cargo delivery.
+          Explore aircraft for aerial surveys, surveillance, high-altitude cargo delivery and precision agriculture.
         </p>
         <Tabs.Root defaultValue={products[0].slug}>
           <Tabs.List
             aria-labelledby="uav-platforms-heading"
-            className="grid grid-cols-2 border-b sm:grid-cols-4"
+            className="grid grid-cols-2 border-b sm:grid-cols-5"
           >
             {products.map(({ slug, name }) => (
               <Tabs.Trigger
                 key={slug}
                 value={slug}
-                className="min-h-11 border-b-2 border-transparent px-2 py-2 text-sm font-semibold text-muted-foreground hover:text-foreground focus-visible:-outline-offset-4 data-[state=active]:border-primary data-[state=active]:text-primary sm:px-3"
+                className="min-h-11 border-b-2 border-transparent px-2 py-2 text-sm font-semibold text-muted-foreground hover:text-foreground focus-visible:-outline-offset-4 data-[state=active]:border-primary data-[state=active]:text-primary max-sm:last:col-span-2 sm:px-3"
               >
                 {name}
               </Tabs.Trigger>

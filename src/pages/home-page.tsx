@@ -90,7 +90,7 @@ export function HomePage() {
               </span>
             </h1>
             <p className="mt-4 max-w-2xl text-sm leading-6 text-muted-foreground max-sm:text-center sm:mt-6">
-              From Kochi, we develop UAVs for mapping, surveillance and high-altitude logistics.
+              From Kochi, we develop UAVs for mapping, surveillance, high-altitude logistics and precision agriculture.
               We also help teams model, simulate and manufacture parts and electronics.
             </p>
             <div className="mt-7 flex flex-col flex-wrap gap-3 sm:flex-row">

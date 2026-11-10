@@ -12,7 +12,7 @@ export function ProductsPage() {
         compact
         eyebrow="UAV products"
         title="UAV Products"
-        description="Compare four UAV platforms for aerial mapping, inspection, surveillance and high-altitude logistics."
+        description="Compare UAV platforms for aerial mapping, inspection, surveillance, high-altitude logistics and precision agriculture."
         visual={
           <AssetImage
             src={uavLineup}
@@ -37,7 +37,7 @@ export function ProductsPage() {
           >
             Choose a UAV Platform
           </h2>
-          <ul className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+          <ul className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5">
             {products.map(({ slug, name, summary, preview }) => (
               <CatalogCard
                 key={slug}

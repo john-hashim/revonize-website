@@ -10,6 +10,8 @@ import spectraPreview from '@/assets/images/uav/spectra-hero.webp'
 import veekshaPreview from '@/assets/images/uav/veeksha-hero.webp'
 import ibexPreview from '@/assets/images/uav/ibex-hero.webp'
 import stemPreview from '@/assets/images/uav/stem-hero.webp'
+import agrihawkPreview from '@/assets/images/uav/agrihawk-hero.webp'
+import agrihawkSmallPreview from '@/assets/images/uav/agrihawk-hero-480.webp'
 
 export const products = [
   {
@@ -121,6 +123,38 @@ export const products = [
       'Object tracking',
       'Aerial mapping',
       'Law enforcement support',
+    ],
+  },
+  {
+    slug: 'agrihawk',
+    name: 'AgriHawk',
+    image: { full: agrihawkPreview, small: agrihawkSmallPreview },
+    preview: agrihawkPreview,
+    format: 'Agricultural sprayer',
+    application: 'Precision agriculture',
+    summary: 'A precision agriculture drone for crop monitoring, targeted spraying and irrigation management.',
+    description:
+      'AgriHawk uses interchangeable imaging sensors and sprayers for crop scouting and targeted application. GPS-guided flights, live data and AI-assisted image analysis help identify areas that need closer inspection.',
+    specifications: [
+      { label: 'Maximum all-up weight', value: '30 kg' },
+      { label: 'Payload capacity', value: '10 kg' },
+      { label: 'Operating range', value: '2 km' },
+      { label: 'Flight ceiling', value: '300 m' },
+      { label: 'Imaging', value: '4K or multispectral imaging' },
+      { label: 'Additional sensing', value: 'Thermal sensing' },
+      { label: 'Payload options', value: 'Interchangeable imaging sensors or sprayers' },
+      { label: 'Battery', value: 'Swappable 30,000 mAh battery with fast charging' },
+      { label: 'Flight modes', value: 'Autonomous, manual and GPS waypoints' },
+      { label: 'Communications', value: '4G/5G, Wi-Fi and RF' },
+    ],
+    specificationsNote:
+      'These are previously published specifications. Request a current spec sheet to confirm configuration, operating limits and availability.',
+    applications: [
+      'Crop health monitoring and yield estimation',
+      'Precision spraying',
+      'Irrigation management and water stress monitoring',
+      'Weed and disease detection',
+      'Scouting for signs of pest damage and nutrient deficiency',
     ],
   },
 ]
